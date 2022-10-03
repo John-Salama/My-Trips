@@ -15,4 +15,7 @@
     <string name="signup">SIGNUP</string>
     <string name="password_confirmation">Password Confirmation</string>
     <string name="upload_image">Upload image</string>
+    <string name="account_recovery">Account Recovery</string>
+    <string name="ok">ok</string>
+    <string name="send">Send</string>
 </resources>
