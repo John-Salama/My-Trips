@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">MyTrips</string>
+    <string name="login_image">login_image</string>
+    <string name="already_have_an_account">Already Have an Account ?</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="login">Login</string>
+    <string name="forgot_password">FORGOT PASSWORD ?</string>
+    <string name="or">OR</string>
+    <string name="google">google</string>
+    <string name="facebook">facebook</string>
+    <string name="new_user_register_now">New User? Register Now</string>
+    <string name="user_name">User Name</string>
+    <string name="registration">Registration</string>
+    <string name="signup">SIGNUP</string>
+    <string name="password_confirmation">Password Confirmation</string>
+    <string name="upload_image">Upload image</string>
+</resources>
