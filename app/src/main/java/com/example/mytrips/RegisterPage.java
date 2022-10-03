@@ -11,7 +11,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -27,63 +26,58 @@ import java.io.IOException;
 
 public class RegisterPage extends AppCompatActivity {
     private ImageView mSignupMassage;
-    private Button mSignUpBtn;
-    private TextView mSelectImage;
     DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-trips-66039-default-rtdb.firebaseio.com/");
+    private Button mSignUpBtn;
+    private TextView mUserName;
+    private TextView mEmail;
+    private TextView mPassword;
+    private TextView mPasswordConfirmation;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
         mSignupMassage = findViewById(R.id.signup_img);
-        mSelectImage = findViewById(R.id.select_photo);
+        TextView selectImage = findViewById(R.id.select_photo);
         mSignUpBtn = findViewById(R.id.signup_btn);
-        TextView userName = findViewById(R.id.signup_user_name_text);
-        TextView email = findViewById(R.id.signup_email_text);
-        TextView password = findViewById(R.id.signup_password_text);
-        TextView passwordConfirmation = findViewById(R.id.signup_password_confirmation_text);
+        mUserName = findViewById(R.id.signup_user_name_text);
+        mEmail = findViewById(R.id.signup_email_text);
+        mPassword = findViewById(R.id.signup_password_text);
+        mPasswordConfirmation = findViewById(R.id.signup_password_confirmation_text);
+        selectImage.setOnClickListener(v -> imageChooser());
+        register();
+    }
 
-
-        mSelectImage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                imageChooser();
-            }
-        });
-
-        mSignUpBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String user = userName.getText().toString();
-                String Email = email.getText().toString().replace(".",",");
-                String pass = password.getText().toString();
-                String passConfirm = passwordConfirmation.getText().toString();
-                if(user.isEmpty()||Email.isEmpty()||pass.isEmpty()||passConfirm.isEmpty())
-                    Toast.makeText(RegisterPage.this,"please fill all fields",Toast.LENGTH_LONG).show();
-                else if(!pass.equals(passConfirm))
-                    Toast.makeText(RegisterPage.this,"password dose not matched",Toast.LENGTH_LONG).show();
-                else{
-                    db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            if(snapshot.hasChild(Email))
-                                Toast.makeText(RegisterPage.this,"email already registered",Toast.LENGTH_LONG).show();
+    private void register() {
+        mSignUpBtn.setOnClickListener(v -> {
+            String user = mUserName.getText().toString();
+            String Email = mEmail.getText().toString().replace(".",",");
+            String pass = mPassword.getText().toString();
+            String passConfirm = mPasswordConfirmation.getText().toString();
+            if(user.isEmpty()||Email.isEmpty()||pass.isEmpty()||passConfirm.isEmpty())
+                Toast.makeText(RegisterPage.this,"please fill all fields",Toast.LENGTH_LONG).show();
+            else if(!pass.equals(passConfirm))
+                Toast.makeText(RegisterPage.this,"password dose not matched",Toast.LENGTH_LONG).show();
+            else{
+                db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        if(snapshot.hasChild(Email)){
+                            Toast.makeText(RegisterPage.this,"email already registered",Toast.LENGTH_LONG).show();
+                        }else{
+                            db.child("users").child(Email).child("fullName").setValue(user);
+                            db.child("users").child(Email).child("email").setValue(Email);
+                            db.child("users").child(Email).child("password").setValue(pass);
+                            Toast.makeText(RegisterPage.this,"user registered successfully",Toast.LENGTH_LONG).show();
                             finish();
                         }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                    db.child("users").child(Email).child("fullName").setValue(user);
-                    db.child("users").child(Email).child("email").setValue(Email);
-                    db.child("users").child(Email).child("password").setValue(pass);
-                    Toast.makeText(RegisterPage.this,"user registered successfully",Toast.LENGTH_LONG).show();
-                    finish();
-                }
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+                    }
+                });
             }
         });
-
     }
 
     //prepare intent to open gallery

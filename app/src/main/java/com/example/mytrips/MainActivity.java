@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -18,26 +17,30 @@ import com.google.firebase.database.ValueEventListener;
 
 public class MainActivity extends AppCompatActivity {
     DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-trips-66039-default-rtdb.firebaseio.com/");
+    private TextView mRegistration;
+    private TextView mForgotPassword;
+    private TextView mEmailText;
+    private TextView mPasswordText;
+    private Button mLoginBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        TextView registration = findViewById(R.id.register_text);
-        TextView forgotPassword = findViewById(R.id.forgot_password_text);
-        TextView emailText = findViewById(R.id.login_email_text);
-        TextView passwordText = findViewById(R.id.login_password_text);
-        Button loginBtn = findViewById(R.id.login_btn);
-        registration.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,RegisterPage.class);
-            startActivity(intent);
-        });
-        forgotPassword.setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this,ForgetYourPassword.class);
-            startActivity(intent);
-        });
-        loginBtn.setOnClickListener(v -> {
-            String Email = emailText.getText().toString().replace(".",",");
-            String Password = passwordText.getText().toString();
+        mRegistration = findViewById(R.id.register_text);
+        mForgotPassword = findViewById(R.id.forgot_password_text);
+        mEmailText = findViewById(R.id.login_email_text);
+        mPasswordText = findViewById(R.id.login_password_text);
+        mLoginBtn = findViewById(R.id.login_btn);
+        goToRegistration();
+        goToForgot();
+        login();
+    }
+
+    private void login() {
+        mLoginBtn.setOnClickListener(v -> {
+            String Email = mEmailText.getText().toString().replace(".",",");
+            String Password = mPasswordText.getText().toString();
             if(Email.equals("")||Password.equals("")){
                 Toast.makeText(MainActivity.this,"please fill all the fields",Toast.LENGTH_LONG).show();
             }else{
@@ -45,7 +48,8 @@ public class MainActivity extends AppCompatActivity {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         if(snapshot.hasChild(Email)){
-                            final String getPass = snapshot.child(Email).child("password").getValue(String.class);
+                            String getPass = snapshot.child(Email).child("password").getValue(String.class);
+                            assert getPass != null;
                             if(getPass.equals(Password)){
                                 Toast.makeText(MainActivity.this,"login successful",Toast.LENGTH_LONG).show();
                             }else{
@@ -58,11 +62,23 @@ public class MainActivity extends AppCompatActivity {
                     }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
+                    public void onCancelled(@NonNull DatabaseError error) {}
                 });
             }
+        });
+    }
+
+    private void goToForgot() {
+        mForgotPassword.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,ForgetYourPassword.class);
+            startActivity(intent);
+        });
+    }
+
+    private void goToRegistration() {
+        mRegistration.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this,RegisterPage.class);
+            startActivity(intent);
         });
     }
 }
