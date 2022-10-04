@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mEmailText;
     private TextView mPasswordText;
     private Button mLoginBtn;
+    Intent addtrip;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
         mLoginBtn = findViewById(R.id.login_btn);
         goToRegistration();
         goToForgot();
-        login();
+         login();
     }
 
     private void login() {
