@@ -34,16 +34,10 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip_page);
-
-
         initializeContent();
         setCalendarPicker(tripDate);
         setTimePicker(tripTime);
         setSpinner();
-
-
-
-
     }
 
     private void initializeContent() {
@@ -65,7 +59,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
                 calendar.set(Calendar.MONTH , month);
                 calendar.set(Calendar.DAY_OF_MONTH , day);
                 updateCalendar();
-            }//
+            }
 
 
 
@@ -125,6 +119,4 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
 
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
-
-
 }
