@@ -36,6 +36,13 @@ public class MainActivity extends AppCompatActivity {
         mLoginBtn = findViewById(R.id.login_btn);
         goToRegistration();
         goToForgot();
+        /*mLoginBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addtrip = new Intent(MainActivity.this,AddTripPage.class);
+                startActivity(addtrip);
+            }
+        });*/
          login();
     }
 
