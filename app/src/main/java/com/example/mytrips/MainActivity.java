@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
                             String getPass = snapshot.child(mEmail).child("password").getValue(String.class);
                             assert getPass != null;
                             if(getPass.equals(mPassword)){
-                                addTrip = new Intent(MainActivity.this,AddTripPage.class);
+                                addTrip = new Intent(MainActivity.this,UpcomingPage.class);
                                 startActivity(addTrip);
                             }else{
                                 mPasswordTextView.setError("wrong password");

@@ -36,6 +36,8 @@
     <string name="trip_start_location">From</string>
     <string name="trip_end_location">To</string>
     <string name="upcomig_start">Start</string>
+    <string name="start">Start</string>
+    <string name="img">img</string>
     <string-array name="tripType_array">
         <item>One Direction</item>
         <item>Round Trip</item>
