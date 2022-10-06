@@ -28,9 +28,17 @@
     <string name="tripType">Trip Type</string>
     <string name="spinner">spinner</string>
     <string name="addTrip_btn">Add</string>
+    <string name="upcoming_item">Upcoming Item</string>
+    <string name="trip_start_time">Start time</string>
+    <string name="trip_start_date">Start date </string>
+    <string name="trip_name">Trip Name</string>
+    <string name="trip_status">Trip Status</string>
+    <string name="trip_start_location">From</string>
+    <string name="trip_end_location">To</string>
+    <string name="upcomig_start">Start</string>
     <string-array name="tripType_array">
-    <item>One Direction</item>
-    <item>Round Trip</item>
+        <item>One Direction</item>
+        <item>Round Trip</item>
     </string-array>
 
 </resources>

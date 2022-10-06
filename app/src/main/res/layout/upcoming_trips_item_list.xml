@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:cardElevation="10dp"
+        app:cardCornerRadius="10dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/upcomig_img"
+                android:layout_width="120dp"
+                android:layout_height="match_parent"
+                android:contentDescription="@string/upcoming_item"
+                app:srcCompat="@drawable/road_trip"
+                android:layout_marginStart="16dp"/>
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/upcoming_StartTime_tv"
+                    android:textSize="25sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/trip_start_time"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    />
+
+                <TextView
+                    android:id="@+id/upcoming_StartDate_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/trip_start_date"
+                    android:layout_marginStart="16dp"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/upcoming_Status_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_marginTop="16dp"
+                    android:text="@string/trip_status"
+                    android:layout_marginStart="16dp"
+                    android:textSize="25sp" />
+
+                <TextView
+                    android:id="@+id/upcoming_Name_tv"
+                    android:textSize="25sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/trip_name"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"
+                    />
+                <TextView
+                    android:id="@+id/upcoming_StartLocation_tv"
+                    android:textSize="25sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    app:drawableStartCompat="@drawable/ic_baseline_my_location_24"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    android:text="@string/trip_start_location"/>
+
+                <TextView
+                    android:id="@+id/upcoming_endLocation_tv"
+                    android:textSize="25sp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:text="@string/trip_end_location"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginStart="16dp"
+                    app:drawableStartCompat="@drawable/ic_baseline_location_on_24"
+                    />
+
+                <Button
+                    android:id="@+id/upcoming_Start_btn"
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/rounded_btn"
+                    android:text="@string/upcomig_start"
+                    android:textColor="@color/white"
+                    android:layout_marginStart="16dp"
+                    android:layout_marginTop="16dp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </androidx.cardview.widget.CardView>
+
+
+</LinearLayout>
