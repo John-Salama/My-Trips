@@ -33,8 +33,8 @@ public class MainActivity extends AppCompatActivity {
         initializeViewComponent();
         goToRegistration();
         goToForgot();
-       /* mLoginBtn.setOnClickListener(view -> {
-            addTrip = new Intent(MainActivity.this,UpcomingPage.class);
+       /*mLoginBtn.setOnClickListener(view -> {
+            addTrip = new Intent(MainActivity.this,AddNotePage.class);
             startActivity(addTrip);
         });*/
          login();

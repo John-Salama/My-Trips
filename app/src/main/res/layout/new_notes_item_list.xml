@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:padding="8dp"
+    android:weightSum="8">
+
+        <TextView
+            android:id="@+id/newNote_textView"
+            android:layout_width="290dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            android:autofillHints=""
+            android:background="@drawable/round_edge"
+            android:drawablePadding="16dp"
+            android:ems="10"
+            android:minHeight="48dp"
+            android:padding="16dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
+            android:text="@string/my_note"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/deleteNote_fab"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:contentDescription="@string/delete_note_fab"
+        android:focusable="true"
+        app:backgroundTint="@color/app_theme"
+        app:srcCompat="@drawable/ic_baseline_delete_forever_24"
+        app:useCompatPadding="false" />
+
+</LinearLayout>
+

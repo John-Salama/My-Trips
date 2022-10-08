@@ -15,6 +15,13 @@
         android:theme="@style/Theme.MyTrips"
         tools:targetApi="31" >
         <activity
+            android:name=".AddNotePage"
+            android:exported="false" >
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".UpcomingPage"
             android:exported="false" >
             <meta-data

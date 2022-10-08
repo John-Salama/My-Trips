@@ -38,6 +38,10 @@
     <string name="upcomig_start">Start</string>
     <string name="start">Start</string>
     <string name="img">img</string>
+    <string name="my_note">Add Note</string>
+    <string name="add_note_img">add_note_img</string>
+    <string name="add_note_Fbtn">Add bot fab</string>
+    <string name="delete_note_fab">Delete Note</string>
     <string-array name="tripType_array">
         <item>One Direction</item>
         <item>Round Trip</item>
