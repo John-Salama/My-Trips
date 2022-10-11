@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/nav_img"
                 android:layout_width="440dp"
                 android:layout_height="290dp"
                 android:contentDescription="@string/plane_img"
@@ -35,7 +35,7 @@
                 tools:ignore="ImageContrastCheck" />
 
             <TextView
-                android:id="@+id/textView"
+                android:id="@+id/nav_email"
                 android:layout_width="221dp"
                 android:layout_height="73dp"
                 android:layout_marginStart="16dp"
@@ -70,7 +70,7 @@
                 android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView" />
+                app:layout_constraintTop_toBottomOf="@+id/nav_img" />
 
             <EditText
                 android:id="@+id/tripEnd_editTxt"
