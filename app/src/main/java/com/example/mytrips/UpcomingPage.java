@@ -21,7 +21,5 @@ public class UpcomingPage extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         UpcomingTripsAdapter upcomingTripsAdapter = new UpcomingTripsAdapter(upcomingTripsData, UpcomingPage.this);
         recyclerView.setAdapter(upcomingTripsAdapter);
-
-
     }
 }

@@ -1,40 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/linearLayout3"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="horizontal"
-    android:padding="8dp"
+    android:layout_height="wrap_content"
     android:weightSum="8">
 
-        <TextView
-            android:id="@+id/newNote_textView"
-            android:layout_width="290dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:autofillHints=""
-            android:background="@drawable/round_edge"
-            android:drawablePadding="16dp"
-            android:ems="10"
-            android:minHeight="48dp"
-            android:padding="16dp"
-            android:paddingStart="16dp"
-            android:paddingEnd="16dp"
-            android:text="@string/my_note"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" />
+    <TextView
+        android:id="@+id/newNote_textView"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:autofillHints=""
+        android:background="@drawable/round_edge"
+        android:drawablePadding="16dp"
+        android:ems="10"
+        android:minHeight="48dp"
+        android:padding="16dp"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:text="@string/my_note"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/deleteNote_fab"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/deleteNote_fab"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="8dp"
         android:clickable="true"
         android:contentDescription="@string/delete_note_fab"
         android:focusable="true"
         app:backgroundTint="@color/app_theme"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/newNote_textView"
+        app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/ic_baseline_delete_forever_24"
         app:useCompatPadding="false" />
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 
