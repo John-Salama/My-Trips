@@ -5,16 +5,16 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_home"
-            android:icon="@drawable/ic_menu_camera"
+            android:id="@+id/nav_upcoming"
+            android:icon="@drawable/ic_baseline_arrow_upward_24"
             android:title="@string/upcoming" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_baseline_history_24"
             android:title="@string/history" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:id="@+id/nav_map_history"
+            android:icon="@drawable/ic_baseline_location_on_24"
             android:title="@string/history_map" />
     </group>
 
@@ -22,7 +22,7 @@
         <menu>
             <item
                 android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_menu_slideshow"
+                android:icon="@android:drawable/ic_lock_power_off"
                 android:title="@string/Logout" />
 
         </menu>
