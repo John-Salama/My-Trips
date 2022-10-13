@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_upcoming"
+            android:icon="@drawable/ic_baseline_arrow_upward_24"
+            android:title="@string/nav_upcoming" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_baseline_history_24"
+            android:title="@string/nav_history" />
+        <item
+            android:id="@+id/nav_historyMap"
+            android:icon="@drawable/ic_baseline_location_on_24"
+            android:title="@string/nav_historyMap" />
+    </group>
+    <group >
+        <item
+            android:id="@+id/nav_signOut"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:icon="@drawable/ic_baseline_power_settings_new_24"
+            android:title="@string/nav_signOut" />
+    </group>
+</menu>
