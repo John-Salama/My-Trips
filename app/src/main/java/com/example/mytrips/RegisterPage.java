@@ -1,5 +1,7 @@
 package com.example.mytrips;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
@@ -11,19 +13,30 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.ktx.Firebase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class RegisterPage extends AppCompatActivity {
     private ImageView mSignupMassage;
@@ -38,6 +51,8 @@ public class RegisterPage extends AppCompatActivity {
     private String mPassword;
     private String mPasswordConfirm;
     private TextView mSelectImage;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +80,14 @@ public class RegisterPage extends AppCompatActivity {
         mPasswordConfirm = mPasswordConfirmationView.getText().toString().trim();
     }
 
+    private boolean uploadImage(String imageName) {
+        final boolean[] uploadStatue = new boolean[1];
+        uploadStatue[0] = true;
+        StorageReference imagesRef = mStorageReference.child("images/" + imageName);
+        imagesRef.putFile(mSelectedImageUri).addOnSuccessListener(taskSnapshot -> uploadStatue[0] = true).addOnFailureListener(e -> uploadStatue[0] = false);
+        return uploadStatue[0];
+    }
+
     private void register() {
         mSignUpBtn.setOnClickListener(v -> {
             getRegistrationData();
@@ -77,27 +100,23 @@ public class RegisterPage extends AppCompatActivity {
             else if(!mPassword.equals(mPasswordConfirm)){
                 mPasswordConfirmationView.setError("password not matched");
                 mPasswordConfirmationView.requestFocus();
+            }else if(mPassword.length()<8){
+                mPasswordView.setError("password is short");
+                mPasswordView.requestFocus();
             }
             else{
-                db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        mEmail = mEmail.replace(".",",");
-                        if(snapshot.hasChild(mEmail)){
-                            mEmailView.setError("email already registered");
-                            mEmailView.requestFocus();
-                        }else{
-                            db.child("users").child(mEmail).child("fullName").setValue(mUser);
-                            db.child("users").child(mEmail).child("email").setValue(mEmail);
-                            db.child("users").child(mEmail).child("password").setValue(mPassword);
-                            Toast.makeText(RegisterPage.this,"user registered successfully",Toast.LENGTH_LONG).show();
-                            finish();
-                        }
-                    }
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-                    }
-                });
+                mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                //suploadImage(mEmail);
+                                Toast.makeText(RegisterPage.this, "user registered successfully", Toast.LENGTH_LONG).show();
+                                finish();
+                            } else {
+                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                                Toast.makeText(RegisterPage.this, "Authentication failed.",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
             }
         });
     }
@@ -112,6 +131,7 @@ public class RegisterPage extends AppCompatActivity {
     });
     }
 
+    private Uri mSelectedImageUri;
     //take photo from gallery
     ActivityResultLauncher<Intent> launchSomeActivity = registerForActivityResult(
             new ActivityResultContracts
@@ -122,13 +142,13 @@ public class RegisterPage extends AppCompatActivity {
                     Intent data = result.getData();
                     if (data != null
                             && data.getData() != null) {
-                        Uri selectedImageUri = data.getData();
+                        mSelectedImageUri = data.getData();
                         Bitmap selectedImageBitmap = null;
                         try {
                             selectedImageBitmap
                                     = MediaStore.Images.Media.getBitmap(
                                     this.getContentResolver(),
-                                    selectedImageUri);
+                                    mSelectedImageUri);
                         }
                         catch (IOException e) {
                             e.printStackTrace();
