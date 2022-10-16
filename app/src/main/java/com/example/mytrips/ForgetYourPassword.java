@@ -35,6 +35,7 @@ public class ForgetYourPassword extends AppCompatActivity {
             auth.sendPasswordResetEmail(email).addOnCompleteListener(task -> {
                 if(task.isSuccessful()){
                     Toast.makeText(ForgetYourPassword.this,"check your email",Toast.LENGTH_LONG).show();
+                    finish();
                 }else{
                     Toast.makeText(ForgetYourPassword.this,"an error occurred",Toast.LENGTH_LONG).show();
                 }

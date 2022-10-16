@@ -1,19 +1,31 @@
 package com.example.mytrips;
 
+import static android.content.ContentValues.TAG;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
 public class LoginPage extends AppCompatActivity {
     DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-trips-66039-default-rtdb.firebaseio.com/");
@@ -25,6 +37,10 @@ public class LoginPage extends AppCompatActivity {
     private String mEmail;
     private String mPassword;
     Intent addTrip;
+    public static Bitmap mBitmap = null;
+    public static final long MEGABYTES = 1024 * 1024;
+    private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,36 +70,24 @@ public class LoginPage extends AppCompatActivity {
             if(mEmail.equals("")|| mPassword.equals("")){
                 Toast.makeText(LoginPage.this,"please fill all the fields",Toast.LENGTH_LONG).show();
             }else{
-                db.child("users").addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        if(snapshot.hasChild(mEmail)){
-                            String getPass = snapshot.child(mEmail).child("password").getValue(String.class);
-                            assert getPass != null;
-                            if(getPass.equals(mPassword)){
+                mAuth.signInWithEmailAndPassword(mEmail, mPassword)
+                        .addOnCompleteListener(this, task -> {
+                            if (task.isSuccessful()) {
+                                FirebaseUser user = mAuth.getCurrentUser();
                                 addTrip = new Intent(LoginPage.this,UpcomingPage.class);
                                 startActivity(addTrip);
-                            }else{
-                                mPasswordTextView.setError("wrong password");
-                                mPasswordTextView.requestFocus();
+                            } else {
+                                Toast.makeText(LoginPage.this, "Wrong password or email ",
+                                        Toast.LENGTH_SHORT).show();
                             }
-                        }
-                        else{
-                                mEmailTextView.setError("wrong email");
-                                mEmailTextView.requestFocus();
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {}
-                });
+                        });
             }
         });
     }
 
     private void getLoginData() {
-        mEmail = mEmailTextView.getText().toString().replace(".",",");
-        mPassword = mPasswordTextView.getText().toString();
+        mEmail = mEmailTextView.getText().toString().trim();
+        mPassword = mPasswordTextView.getText().toString().trim();
     }
 
     private void goToForgot() {
@@ -98,5 +102,14 @@ public class LoginPage extends AppCompatActivity {
             Intent intent = new Intent(LoginPage.this,RegisterPage.class);
             startActivity(intent);
         });
+    }
+
+    private void downloadImage(String fileName)
+    {
+        // Create a reference with an initial file path and name
+        StorageReference imgRef =  mStorageReference.child("images/" + fileName);
+        Task<byte[]> bytes = imgRef.getBytes(MEGABYTES);
+        while(!bytes.isComplete());
+        mBitmap = BitmapFactory.decodeByteArray(bytes.getResult(),0,bytes.getResult().length);
     }
 }
