@@ -16,6 +16,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     List<NoteData> mNoteData;
     Context mContext;
+    boolean emptyFlag;
+
     public NoteAdapter(List<NoteData> noteData, AddNotePage newNote)
     {
         this.mNoteData = noteData;
@@ -53,11 +55,16 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             super(itemView);
             noteData = itemView.findViewById(R.id.newNote_textView);
             deleteFab = itemView.findViewById(R.id.deleteNote_fab);
+
             deleteFab.setOnClickListener(v -> {
                 int position  =  getAdapterPosition();
                 mNoteData.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mNoteData.size());
+                if(getItemCount() == 0)
+                {
+                    emptyFlag =true;
+                }
             });
         }
     }

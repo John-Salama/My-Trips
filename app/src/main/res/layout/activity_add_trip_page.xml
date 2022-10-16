@@ -35,7 +35,7 @@
                 tools:ignore="ImageContrastCheck" />
 
             <TextView
-                android:id="@+id/nav_email"
+                android:id="@+id/addTripPage_txt"
                 android:layout_width="221dp"
                 android:layout_height="73dp"
                 android:layout_marginStart="16dp"

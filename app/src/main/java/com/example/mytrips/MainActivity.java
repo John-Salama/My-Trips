@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity
         NavigationUI.setupWithNavController(navigationView, navController);
         View headerView = navigationView.getHeaderView(0);
         TextView userName = headerView.findViewById(R.id.nav_username);
-        TextView email = headerView.findViewById(R.id.nav_email);
+        TextView email = headerView.findViewById(R.id.addTripPage_txt);
     }
 
     @Override

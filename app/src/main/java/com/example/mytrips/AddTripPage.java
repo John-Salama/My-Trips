@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -12,9 +14,12 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
+import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddTripPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText tripDate;
@@ -30,6 +35,11 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     Button btn_addTrip;
     Button btn_addTripRound;
 
+    EditText tripStartLoc;
+    EditText tripEndLoc;
+    TextView t;
+
+
 
 
     @Override
@@ -40,9 +50,12 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         setCalendarPicker(tripDate);
         setTimePicker(tripTime);
         setSpinner();
+       //getCoordinates();
     }
 
     private void initializeContent() {
+        tripStartLoc =  findViewById(R.id.tripStart_editTxt);
+        tripEndLoc = findViewById(R.id.tripEnd_editTxt);
         tripDate = findViewById(R.id.tripDate_editTxt);
         tripTime = findViewById(R.id.tripTime_editTxt);
         mSpinner = findViewById(R.id.spinner_tritpType);
@@ -50,6 +63,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         tripTimeRound = findViewById(R.id.tripTimeRound_editTxt);
         btn_addTrip = findViewById(R.id.addTripRound_btn);
         btn_addTripRound = findViewById(R.id.addTrip_btn2);
+        t = findViewById(R.id.tirpType_txt);
     }
 
     private void setCalendarPicker(final EditText date1) {
@@ -118,7 +132,31 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
        }
     }
 
+    /*  private void getCoordinates(View view)
+    {
 
+        btn_addTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Geocoder mGeocoder = new Geocoder(view.getContext());
+                List<Address> mAddressesList;
+                try {
+                    mAddressesList = mGeocoder.getFromLocationName(tripStartLoc.getText().toString(), 1);
+
+                    if(mAddressesList != null)
+                    {
+                        double StartLatitude = mAddressesList.get(0).getLatitude();
+                        double StartLongitude = mAddressesList.get(0).getLongitude();
+                        t.setText("lat" + (StartLatitude) );
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+     */
 
     public void onNothingSelected(AdapterView<?> adapterView) {
     }

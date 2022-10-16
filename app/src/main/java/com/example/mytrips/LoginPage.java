@@ -47,13 +47,14 @@ public class LoginPage extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         initializeViewComponent();
-        goToRegistration();
-        goToForgot();
-       /* mLoginBtn.setOnClickListener(view -> {
-            addTrip = new Intent(LoginPage.this,AddNotePage.class);
+        //goToRegistration();
+        //goToForgot();
+        mLoginBtn.setOnClickListener(view -> {
+            //addTrip = new Intent(LoginPage.this,AddNotePage.class);
+            addTrip = new Intent(LoginPage.this, AddTripPage.class);
             startActivity(addTrip);
-        });*/
-         login();
+        });
+         //login();
     }
 
     private void initializeViewComponent() {
