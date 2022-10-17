@@ -4,7 +4,6 @@ import static android.content.ContentValues.TAG;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
@@ -21,22 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.ktx.Firebase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.io.IOException;
-import java.util.Objects;
 
 public class RegisterPage extends AppCompatActivity {
     private ImageView mSignupMassage;
@@ -80,12 +73,9 @@ public class RegisterPage extends AppCompatActivity {
         mPasswordConfirm = mPasswordConfirmationView.getText().toString().trim();
     }
 
-    private boolean uploadImage(String imageName) {
-        final boolean[] uploadStatue = new boolean[1];
-        uploadStatue[0] = true;
+    private void uploadImage(String imageName) {
         StorageReference imagesRef = mStorageReference.child("images/" + imageName);
-        imagesRef.putFile(mSelectedImageUri).addOnSuccessListener(taskSnapshot -> uploadStatue[0] = true).addOnFailureListener(e -> uploadStatue[0] = false);
-        return uploadStatue[0];
+        imagesRef.putFile(mSelectedImageUri).addOnFailureListener(e -> Toast.makeText(RegisterPage.this, "failed to upload photo", Toast.LENGTH_LONG).show());
     }
 
     private void register() {
@@ -108,7 +98,8 @@ public class RegisterPage extends AppCompatActivity {
                 mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
-                                //suploadImage(mEmail);
+                                uploadImage(task.getResult().getUser().getUid());
+                                setUserName(task.getResult().getUser().getUid());
                                 Toast.makeText(RegisterPage.this, "user registered successfully", Toast.LENGTH_LONG).show();
                                 finish();
                             } else {
@@ -119,6 +110,11 @@ public class RegisterPage extends AppCompatActivity {
                         });
             }
         });
+    }
+
+    private void setUserName(String UserId) {
+        db.child("users");
+        db.child(UserId).child("username").setValue(mUser).addOnFailureListener(e -> Toast.makeText(RegisterPage.this, "failed to set username", Toast.LENGTH_LONG).show());
     }
 
     //prepare intent to open gallery
