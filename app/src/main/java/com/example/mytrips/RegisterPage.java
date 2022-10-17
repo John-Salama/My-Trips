@@ -95,6 +95,9 @@ public class RegisterPage extends AppCompatActivity {
                 mPasswordView.requestFocus();
             }
             else{
+                if(mSelectedImageUri == null)
+                    Toast.makeText(RegisterPage.this, "please choose a photo", Toast.LENGTH_SHORT).show();
+                else{
                 mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
@@ -103,11 +106,11 @@ public class RegisterPage extends AppCompatActivity {
                                 Toast.makeText(RegisterPage.this, "user registered successfully", Toast.LENGTH_LONG).show();
                                 finish();
                             } else {
-                                Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                                Toast.makeText(RegisterPage.this, "Authentication failed.",
+                                Toast.makeText(RegisterPage.this, "email is already registered",
                                         Toast.LENGTH_SHORT).show();
                             }
                         });
+            }
             }
         });
     }

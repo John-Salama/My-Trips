@@ -1,10 +1,13 @@
 package com.example.mytrips;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -17,14 +20,32 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.mytrips.databinding.ActivityMainBinding;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
 
-public class MainActivity extends AppCompatActivity
+public class MainActivity<mDatabase> extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private AppBarConfiguration mAppBarConfiguration;
     private ActivityMainBinding binding;
+    private DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference();
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
+    public static final long MEGABYTES = 1024 * 1024;
+    public static Bitmap mBitmap = null;
+    private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
+    private FirebaseUser mUser;
+    private String mUserId;
+    private TextView mUserName;
+    private TextView mUserEmail;
+    private ImageView mUserImage;
+    private Intent mIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,23 +55,35 @@ public class MainActivity extends AppCompatActivity
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
-        binding.appBarMain.fab.setOnClickListener(view ->
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show());
+        binding.appBarMain.fab.setOnClickListener(view -> {
+                    mIntent = new Intent(MainActivity.this, AddTripPage.class);
+                    startActivity(mIntent);
+                });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_upcoming, R.id.nav_history, R.id.nav_map_history)
+                R.id.nav_upcoming,R.id.nav_history, R.id.nav_map_history)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
         View headerView = navigationView.getHeaderView(0);
-        TextView userName = headerView.findViewById(R.id.nav_username);
-        TextView email = headerView.findViewById(R.id.addTripPage_txt);
+        mUser = mAuth.getCurrentUser();
+        assert mUser != null;
+        mUserId = mUser.getUid();
+        mUserName = headerView.findViewById(R.id.nav_username);
+        mUserEmail = headerView.findViewById(R.id.addTripPage_txt);
+        mUserImage = headerView.findViewById(R.id.user_img);
+        mDatabase.child(mUserId).child("username").get().addOnCompleteListener(task -> {
+            if (task.isSuccessful()) {
+                mUserName.setText((CharSequence) task.getResult().getValue());
+                mUserEmail.setText(mUser.getEmail());
+                mUserImage.setImageBitmap(downloadImage(mUser.getUid()));
+            }
+        });
     }
 
     @Override
@@ -81,5 +114,17 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
+    }
+    private Bitmap downloadImage(String fileName)
+    {
+        // Create a reference with an initial file path and name
+        StorageReference imgRef =  mStorageReference.child("images/" + fileName);
+        Task<byte[]> bytes = imgRef.getBytes(MEGABYTES);
+        while(!bytes.isComplete());
+        mBitmap = BitmapFactory.decodeByteArray(bytes.getResult(),0,bytes.getResult().length);
+        return Bitmap.createScaledBitmap(mBitmap,
+                (int) (mUserImage.getWidth()*0.8),
+                (int) (mUserImage.getHeight()*0.8),
+                true);
     }
 }

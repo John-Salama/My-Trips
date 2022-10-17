@@ -23,7 +23,7 @@
             app:layout_constraintStart_toStartOf="parent">
 
             <ImageView
-                android:id="@+id/nav_img"
+                android:id="@+id/add_Trip_img"
                 android:layout_width="440dp"
                 android:layout_height="290dp"
                 android:contentDescription="@string/plane_img"
@@ -70,7 +70,7 @@
                 android:paddingEnd="16dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/nav_img" />
+                app:layout_constraintTop_toBottomOf="@+id/add_Trip_img" />
 
             <EditText
                 android:id="@+id/tripEnd_editTxt"

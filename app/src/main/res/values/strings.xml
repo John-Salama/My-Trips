@@ -73,5 +73,6 @@
     <string name="history_map">History map</string>
     <string name="empty_notes">Notes List is Empty</string>
     <string name="emptyNotes_img">emptyNotes_img</string>
+    <string name="user_img">user_img</string>
 
 </resources>
