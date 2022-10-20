@@ -31,13 +31,6 @@
                 android:value="" />
         </activity>
         <activity
-            android:name=".UpcomingPage"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".AddTripPage"
             android:exported="false">
             <meta-data

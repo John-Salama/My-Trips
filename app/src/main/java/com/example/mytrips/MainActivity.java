@@ -102,15 +102,6 @@ public class MainActivity<mDatabase> extends AppCompatActivity
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id  = item.getItemId();
-        if (id == R.id.nav_upcoming) {
-            Intent intent = new Intent(this, UpcomingPage.class);
-            startActivity(intent);
-        }
-
-        else if(id == R.id.nav_history) {
-            startActivity(new Intent(MainActivity.this, AddNotePage.class));
-        }
-
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;

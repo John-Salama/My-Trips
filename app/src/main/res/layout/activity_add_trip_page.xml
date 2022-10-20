@@ -261,7 +261,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/tripDateRound_editTxt" />
 
             <Button
-                android:id="@+id/addTrip_btn2"
+                android:id="@+id/addTrip_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"

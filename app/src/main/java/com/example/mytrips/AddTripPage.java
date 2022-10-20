@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -16,10 +14,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 public class AddTripPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText tripDate;
@@ -51,6 +47,11 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         setTimePicker(tripTime);
         setSpinner();
        //getCoordinates();
+        addTrip();
+    }
+
+    private void addTrip() {
+        btn_addTripRound.setOnClickListener(v -> {});
     }
 
     private void initializeContent() {
@@ -62,7 +63,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         tripDateRound = findViewById(R.id.tripDateRound_editTxt);
         tripTimeRound = findViewById(R.id.tripTimeRound_editTxt);
         btn_addTrip = findViewById(R.id.addTripRound_btn);
-        btn_addTripRound = findViewById(R.id.addTrip_btn2);
+        btn_addTripRound = findViewById(R.id.addTrip_btn);
         t = findViewById(R.id.tirpType_txt);
     }
 
