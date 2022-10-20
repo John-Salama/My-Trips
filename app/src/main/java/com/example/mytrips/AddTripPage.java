@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -33,7 +34,11 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
 
     EditText tripStartLoc;
     EditText tripEndLoc;
-    TextView t;
+    double doubleStartLat;
+    double doubleStartLong;
+
+    double doubleEndLat;
+    double doubleEndLong;
 
 
 
@@ -133,31 +138,29 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
        }
     }
 
-    /*  private void getCoordinates(View view)
-    {
+    public void getCoordinates(View view){
+        Geocoder geocoder = new Geocoder(this);
+        List <Address> addressList;
+        //textView.setText();Geocoder.isPresent();
 
-        btn_addTrip.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Geocoder mGeocoder = new Geocoder(view.getContext());
-                List<Address> mAddressesList;
-                try {
-                    mAddressesList = mGeocoder.getFromLocationName(tripStartLoc.getText().toString(), 1);
+        try {
 
-                    if(mAddressesList != null)
-                    {
-                        double StartLatitude = mAddressesList.get(0).getLatitude();
-                        double StartLongitude = mAddressesList.get(0).getLongitude();
-                        t.setText("lat" + (StartLatitude) );
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            addressList = geocoder.getFromLocationName(tripStartLoc.getText().toString(), 1);
+
+            if (addressList.size() > 0){
+                doubleStartLat = addressList.get(0).getLatitude();
+                doubleStartLong = addressList.get(0).getLongitude();
+                String str = ("Latitude: " + doubleStartLat
+                        + " | " + "Longitude: " + doubleStartLong);
+                Log.v("MSG",str);
+
             }
-        });
+        } catch (Exception e) {
+            Log.v("MSG",e.toString());
+            e.printStackTrace();
+        }
     }
 
-     */
 
     public void onNothingSelected(AdapterView<?> adapterView) {
     }
