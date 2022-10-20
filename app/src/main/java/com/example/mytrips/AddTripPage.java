@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,6 +19,7 @@ import android.widget.TextView;
 
 import java.text.DateFormat;
 import java.util.Calendar;
+import java.util.List;
 
 public class AddTripPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
     EditText tripDate;
@@ -69,7 +72,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         tripTimeRound = findViewById(R.id.tripTimeRound_editTxt);
         btn_addTrip = findViewById(R.id.addTripRound_btn);
         btn_addTripRound = findViewById(R.id.addTrip_btn);
-        t = findViewById(R.id.tirpType_txt);
+
     }
 
     private void setCalendarPicker(final EditText date1) {
@@ -140,7 +143,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
 
     public void getCoordinates(View view){
         Geocoder geocoder = new Geocoder(this);
-        List <Address> addressList;
+        List<Address> addressList;
         //textView.setText();Geocoder.isPresent();
 
         try {
