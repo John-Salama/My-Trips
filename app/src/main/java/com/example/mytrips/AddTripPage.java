@@ -4,8 +4,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
-import android.location.Address;
-import android.location.Geocoder;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,13 +13,21 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
 import java.util.Calendar;
-import java.util.List;
 
 public class AddTripPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+
+    EditText tripName;
+
+
     EditText tripDate;
     Calendar calendar;
     EditText tripTime;
@@ -44,25 +50,53 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     double doubleEndLong;
 
 
-
+   DatabaseReference db = FirebaseDatabase.getInstance().getReferenceFromUrl("https://my-trips-66039-default-rtdb.firebaseio.com/");
+   // FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip_page);
         initializeContent();
+        //Log.v("ggg",mUser.toString());
         setCalendarPicker(tripDate);
         setTimePicker(tripTime);
         setSpinner();
        //getCoordinates();
-        addTrip();
+
+       // addTrip();
+
+
+        FirebaseDatabase.getInstance().getReference().child("C1").child("C2").setValue("aaaa");
     }
 
-    private void addTrip() {
-        btn_addTripRound.setOnClickListener(v -> {});
+ /*   private void addTrip()
+    {
+        btn_addTrip.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String name = tripName.getText().toString();
+                if(name.isEmpty())
+                {
+                    Toast.makeText(AddTripPage.this, "Empty",Toast.LENGTH_LONG).show();
+                }
+                else
+                {
+                   // db.child(user.getDisplayName().toString()).child("Name").setValue(name);
+                    Log.v("sss", name);
+                    FirebaseDatabase.getInstance().getReference().child("aaa").push().child("lll").setValue("pppp");
+
+                }
+
+
+            }
+        });
     }
+
+  */
 
     private void initializeContent() {
+        tripName = findViewById(R.id.tripName_editTxt);
         tripStartLoc =  findViewById(R.id.tripStart_editTxt);
         tripEndLoc = findViewById(R.id.tripEnd_editTxt);
         tripDate = findViewById(R.id.tripDate_editTxt);
@@ -141,7 +175,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
        }
     }
 
-    public void getCoordinates(View view){
+   /* public void getCoordinates(View view){
         Geocoder geocoder = new Geocoder(this);
         List<Address> addressList;
         //textView.setText();Geocoder.isPresent();
@@ -163,6 +197,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
             e.printStackTrace();
         }
     }
+    */
 
 
     public void onNothingSelected(AdapterView<?> adapterView) {
