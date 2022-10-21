@@ -29,7 +29,7 @@ public class LoginPage extends AppCompatActivity {
     Intent mIntent;
     public static Bitmap mBitmap = null;
     public static final long MEGABYTES = 1024 * 1024;
-    private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
+    private final StorageReference mStorageReference = FirebaseStorage.getInstance().getReference();
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
 
     @Override
@@ -39,7 +39,7 @@ public class LoginPage extends AppCompatActivity {
         initializeViewComponent();
         goToRegistration();
         goToForgot();
-         login();
+        login();
     }
 
     private void initializeViewComponent() {
@@ -53,13 +53,13 @@ public class LoginPage extends AppCompatActivity {
     private void login() {
         mLoginBtn.setOnClickListener(v -> {
             getLoginData();
-            if(mEmail.equals("")|| mPassword.equals("")){
-                Toast.makeText(LoginPage.this,"please fill all the fields",Toast.LENGTH_LONG).show();
-            }else{
+            if (mEmail.equals("") || mPassword.equals("")) {
+                Toast.makeText(LoginPage.this, "please fill all the fields", Toast.LENGTH_LONG).show();
+            } else {
                 mAuth.signInWithEmailAndPassword(mEmail, mPassword)
                         .addOnCompleteListener(this, task -> {
                             if (task.isSuccessful()) {
-                                mIntent = new Intent(LoginPage.this,MainActivity.class);
+                                mIntent = new Intent(LoginPage.this, MainActivity.class);
                                 startActivity(mIntent);
                             } else {
                                 Toast.makeText(LoginPage.this, "Wrong password or email ",
@@ -77,24 +77,23 @@ public class LoginPage extends AppCompatActivity {
 
     private void goToForgot() {
         mForgotPasswordView.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginPage.this,ForgetYourPassword.class);
+            Intent intent = new Intent(LoginPage.this, ForgetYourPassword.class);
             startActivity(intent);
         });
     }
 
     private void goToRegistration() {
         mRegistrationView.setOnClickListener(v -> {
-            Intent intent = new Intent(LoginPage.this,RegisterPage.class);
+            Intent intent = new Intent(LoginPage.this, RegisterPage.class);
             startActivity(intent);
         });
     }
 
-    private void downloadImage(String fileName)
-    {
+    private void downloadImage(String fileName) {
         // Create a reference with an initial file path and name
-        StorageReference imgRef =  mStorageReference.child("images/" + fileName);
+        StorageReference imgRef = mStorageReference.child("images/" + fileName);
         Task<byte[]> bytes = imgRef.getBytes(MEGABYTES);
-        while(!bytes.isComplete());
-        mBitmap = BitmapFactory.decodeByteArray(bytes.getResult(),0,bytes.getResult().length);
+        while (!bytes.isComplete()) ;
+        mBitmap = BitmapFactory.decodeByteArray(bytes.getResult(), 0, bytes.getResult().length);
     }
 }

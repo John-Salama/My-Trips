@@ -9,7 +9,8 @@ public class TripDataManger {
     private final List<UpcomingTripsData> history = new ArrayList<>();
 
 
-    private TripDataManger(){}
+    private TripDataManger() {
+    }
 
     public static TripDataManger getInstance() {
         if (instance == null) {
@@ -31,7 +32,7 @@ public class TripDataManger {
     }
 
     public void addTrip(UpcomingTripsData trip) {
-        if("Upcoming".equals(trip.getTripStatus()))
+        if ("Upcoming".equals(trip.getTripStatus()))
             upcoming.add(trip);
         else
             history.add(trip);

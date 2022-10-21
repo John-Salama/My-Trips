@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity<mDatabase> extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -43,9 +44,10 @@ public class MainActivity<mDatabase> extends AppCompatActivity
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     public static final long MEGABYTES = 1024 * 1024;
     public static Bitmap mBitmap = null;
-    private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
+    private final StorageReference mStorageReference = FirebaseStorage.getInstance().getReference();
     private FirebaseUser mUser;
     private String mUserId;
+    ImageView page_Image;
     private TextView mUserName;
     private TextView mUserEmail;
     private ImageView mUserImage;
@@ -56,20 +58,22 @@ public class MainActivity<mDatabase> extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+        initializePageImage();
 
         setSupportActionBar(binding.appBarMain.toolbar);
         binding.appBarMain.fab.setOnClickListener(view -> {
-                    mIntent = new Intent(MainActivity.this, AddTripPage.class);
-                    startActivity(mIntent);
-                });
+            mIntent = new Intent(MainActivity.this, AddTripPage.class);
+            startActivity(mIntent);
+        });
         DrawerLayout drawer = binding.drawerLayout;
         NavigationView navigationView = binding.navView;
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_upcoming,R.id.nav_history, R.id.nav_map_history)
+                R.id.nav_upcoming, R.id.nav_history, R.id.nav_map_history)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_main);
@@ -93,23 +97,21 @@ public class MainActivity<mDatabase> extends AppCompatActivity
         mDatabaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot != null)
-                {
+                if (snapshot != null) {
                     TripDataManger.getInstance().getUpcoming().clear();
                     TripDataManger.getInstance().getHistory().clear();
                 }
-                for(DataSnapshot dataSnapshot : snapshot.getChildren())
-                {
+                for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                     UpcomingTripsData trip = new UpcomingTripsData(
-                             dataSnapshot.child("tripStartTime").getValue(String.class)
-                            ,dataSnapshot.child("tripDate").getValue(String.class)
-                            ,dataSnapshot.child("tripName").getValue(String.class)
-                            ,dataSnapshot.child("tripStatus").getValue(String.class)
-                            ,dataSnapshot.child("tripStartLoc").getValue(String.class)
-                            ,dataSnapshot.child("tripEndLoc").getValue(String.class)
-                            ,dataSnapshot.child("tripType").getValue(Integer.class)
-                            ,dataSnapshot.child("tripRoundDate").getValue(String.class)
-                            ,dataSnapshot.child("tripRoundStartTime").getValue(String.class));
+                            dataSnapshot.child("tripStartTime").getValue(String.class)
+                            , dataSnapshot.child("tripDate").getValue(String.class)
+                            , dataSnapshot.child("tripName").getValue(String.class)
+                            , dataSnapshot.child("tripStatus").getValue(String.class)
+                            , dataSnapshot.child("tripStartLoc").getValue(String.class)
+                            , dataSnapshot.child("tripEndLoc").getValue(String.class)
+                            , dataSnapshot.child("tripType").getValue(Integer.class)
+                            , dataSnapshot.child("tripRoundDate").getValue(String.class)
+                            , dataSnapshot.child("tripRoundStartTime").getValue(String.class));
                     TripDataManger.getInstance().addTrip(trip);
                 }
                 HomeFragment.adapter.notifyDataSetChanged();
@@ -135,23 +137,32 @@ public class MainActivity<mDatabase> extends AppCompatActivity
         return NavigationUI.navigateUp(navController, mAppBarConfiguration)
                 || super.onSupportNavigateUp();
     }
+
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        int id  = item.getItemId();
+        int id = item.getItemId();
         DrawerLayout drawerLayout = findViewById(R.id.drawer_layout);
         drawerLayout.closeDrawer(GravityCompat.START);
         return true;
     }
-    private Bitmap downloadImage(String fileName)
-    {
+
+    private Bitmap downloadImage(String fileName) {
         // Create a reference with an initial file path and name
-        StorageReference imgRef =  mStorageReference.child("images/" + fileName);
+        StorageReference imgRef = mStorageReference.child("images/" + fileName);
         Task<byte[]> bytes = imgRef.getBytes(MEGABYTES);
-        while(!bytes.isComplete());
-        mBitmap = BitmapFactory.decodeByteArray(bytes.getResult(),0,bytes.getResult().length);
+        while (!bytes.isComplete()) ;
+        mBitmap = BitmapFactory.decodeByteArray(bytes.getResult(), 0, bytes.getResult().length);
         return Bitmap.createScaledBitmap(mBitmap,
-                (int) (mUserImage.getWidth()*0.8),
-                (int) (mUserImage.getHeight()*0.8),
+                (int) (mUserImage.getWidth() * 0.8),
+                (int) (mUserImage.getHeight() * 0.8),
                 true);
+    }
+
+    private void initializePageImage() {
+        page_Image = findViewById(R.id.upcoming_img);
+        Picasso.get().load(R.drawable.upcoming)
+                .fit()
+                .centerCrop()
+                .into(page_Image);
     }
 }

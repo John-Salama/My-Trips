@@ -20,15 +20,14 @@ import androidx.transition.TransitionManager;
 
 import java.util.List;
 
-public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.ViewHolder>{
-
+public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.ViewHolder> {
 
 
     List<UpcomingTripsData> mTripsData;
     Context mContext;
     Intent mIntent;
-    public UpcomingTripsAdapter(List<UpcomingTripsData> upcomingTripsData, Context newTrip)
-    {
+
+    public UpcomingTripsAdapter(List<UpcomingTripsData> upcomingTripsData, Context newTrip) {
         this.mTripsData = upcomingTripsData;
         this.mContext = newTrip;
     }
@@ -37,7 +36,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.upcoming_trips_item_list,parent, false);
+        View view = layoutInflater.inflate(R.layout.upcoming_trips_item_list, parent, false);
         return new ViewHolder(view);
     }
 
@@ -49,25 +48,24 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         holder.startDate_tv.setText("start date: ".concat(mTripsData.get(position).getTripDate()));
         holder.startLoc_tv.setText("start location: ".concat(mTripsData.get(position).getTripStartLoc()));
         holder.EndLoc_tv.setText("distnation: ".concat(mTripsData.get(position).getTripEndLoc()));
-        if(mTripsData.get(position).getTripType()==1){
+        if (mTripsData.get(position).getTripType() == 1) {
             holder.startTimeRound_tv.setText("back start time: ".concat(mTripsData.get(position).getTripRoundStartTime()));
             holder.startDateRound_tv.setText("back start date: ".concat(mTripsData.get(position).getTripRoundDate()));
-        }else
-        {
+        } else {
             holder.startTimeRound_tv.setVisibility(View.INVISIBLE);
             holder.startDateRound_tv.setVisibility(View.INVISIBLE);
         }
 
-        if(!mTripsData.get(position).getTripStatus().equals("Upcoming"))
+        if (!mTripsData.get(position).getTripStatus().equals("Upcoming"))
             holder.upcomingStartBtn.setVisibility(View.INVISIBLE);
-        holder.menuIcon.setOnClickListener(view ->{
-            PopupMenu tripMenu = new PopupMenu(mContext,holder.menuIcon);
+        holder.menuIcon.setOnClickListener(view -> {
+            PopupMenu tripMenu = new PopupMenu(mContext, holder.menuIcon);
             tripMenu.inflate(R.menu.trip_item_menu);
             tripMenu.show();
             tripMenu.setOnMenuItemClickListener(item -> {
                 int id = item.getItemId();
                 if (id == R.id.trip_menu_note) {
-                    mIntent = new Intent(mContext,AddNotePage.class);
+                    mIntent = new Intent(mContext, AddNotePage.class);
                     mIntent.putExtra("trip_name", mTripsData.get(position).getTripName());
                     mContext.startActivity(mIntent);
                 } else if (id == R.id.trip_menu_cancel) {
@@ -84,8 +82,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         return mTripsData.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder
-    {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         int visibility;
         TextView startTime_tv;
         TextView startDate_tv;
@@ -116,16 +113,16 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             trip = itemView.findViewById(R.id.trip_card);
             upcomingStartBtn = itemView.findViewById(R.id.upcoming_Start_btn);
 
-            itemView.setOnClickListener(view ->{
+            itemView.setOnClickListener(view -> {
                 visibility = data.getVisibility();
                 Transition transition = new AutoTransition();
                 if (visibility == View.VISIBLE) {
                     transition.setDuration(1);
-                    TransitionManager.beginDelayedTransition(trip,transition);
+                    TransitionManager.beginDelayedTransition(trip, transition);
                     visibility = View.GONE;
                 } else if (visibility == View.GONE) {
                     transition.setDuration(300);
-                    TransitionManager.beginDelayedTransition(trip,transition);
+                    TransitionManager.beginDelayedTransition(trip, transition);
                     visibility = View.VISIBLE;
                 }
                 data.setVisibility(visibility);

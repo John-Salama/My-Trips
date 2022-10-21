@@ -8,7 +8,8 @@ public class NotesDataManager {
     private final List<NoteData> notes = new ArrayList<>();
 
 
-    private NotesDataManager(){}
+    private NotesDataManager() {
+    }
 
     public static NotesDataManager getInstance() {
         if (instance == null) {
@@ -20,7 +21,6 @@ public class NotesDataManager {
         }
         return instance;
     }
-
 
 
     public List<NoteData> getNotes() {

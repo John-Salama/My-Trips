@@ -17,12 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -33,6 +35,7 @@ import java.util.List;
 
 public class AddTripPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
+    ImageView page_Image;
     EditText tripName;
     EditText tripStartLoc;
     EditText tripEndLoc;
@@ -48,7 +51,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     TimePickerDialog timePicker;
     int currentHour;
     int currentMinute;
-    boolean roundFlag =false; //normal trip
+    boolean roundFlag = false; //normal trip
     Date takeoffDate;
 
     double doubleStartLat;
@@ -66,15 +69,18 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_trip_page);
         initializeContent();
-        setCalendarPicker(tripDate , roundFlag);
+        initializePageImage();
+        setCalendarPicker(tripDate, roundFlag);
         setTimePicker(tripTime, roundFlag);
         setSpinner();
         addTrip();
         addRoundTrip();
     }
+
     private void initializeContent() {
+        page_Image = findViewById(R.id.add_Trip_img);
         tripName = findViewById(R.id.tripName_editTxt);
-        tripStartLoc =  findViewById(R.id.tripStart_editTxt);
+        tripStartLoc = findViewById(R.id.tripStart_editTxt);
         tripEndLoc = findViewById(R.id.tripEnd_editTxt);
         tripDate = findViewById(R.id.tripDate_editTxt);
         tripTime = findViewById(R.id.tripTime_editTxt);
@@ -85,42 +91,44 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         btn_addTripRound = findViewById(R.id.addTripRound_btn);
 
     }
+    private void initializePageImage() {
+        Picasso.get().load(R.drawable.plane2)
+                .fit()
+                .centerCrop()
+                .into(page_Image);
+    }
 
-    private void setCalendarPicker(final EditText date1 , Boolean round) {
-        calendar =Calendar.getInstance();
+    private void setCalendarPicker(final EditText date1, Boolean round) {
+        calendar = Calendar.getInstance();
         DatePickerDialog.OnDateSetListener date = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day) {
-                calendar.set(Calendar.YEAR , year);
-                calendar.set(Calendar.MONTH , month);
-                calendar.set(Calendar.DAY_OF_MONTH , day);
+                calendar.set(Calendar.YEAR, year);
+                calendar.set(Calendar.MONTH, month);
+                calendar.set(Calendar.DAY_OF_MONTH, day);
                 updateCalendar();
             }
+
             private void updateCalendar() {
                 String selectedDate = DateFormat.getDateInstance(DateFormat.FULL).format(calendar.getTime());
-                if(!round)
-                if (calendar.getTimeInMillis() > (System.currentTimeMillis())) {
-                    date1.setText(selectedDate);
-                    takeoffDate = calendar.getTime();
-                }
-                else
-                {
-                    Toast.makeText(AddTripPage.this, "Date is in the past",Toast.LENGTH_LONG).show();
-                }
-                else
-                {
+                if (!round)
+                    if (calendar.getTimeInMillis() > (System.currentTimeMillis())) {
+                        date1.setText(selectedDate);
+                        takeoffDate = calendar.getTime();
+                    } else {
+                        Toast.makeText(AddTripPage.this, "Date is in the past", Toast.LENGTH_LONG).show();
+                    }
+                else {
                     if (calendar.getTimeInMillis() > takeoffDate.getTime()) {
                         date1.setText(selectedDate);
-                    }
-                    else
-                    {
-                        Toast.makeText(AddTripPage.this, "Return date must be after trip date",Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(AddTripPage.this, "Return date must be after trip date", Toast.LENGTH_LONG).show();
                     }
                 }
             }
         };
         date1.setOnClickListener(view -> new DatePickerDialog(AddTripPage.this, date
-                ,calendar.get(Calendar.YEAR)
+                , calendar.get(Calendar.YEAR)
                 , calendar.get(Calendar.MONTH)
                 , calendar.get(Calendar.DAY_OF_MONTH)).show());
     }
@@ -138,17 +146,15 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
                     } else {
                         Toast.makeText(AddTripPage.this, "Time is in the past", Toast.LENGTH_LONG).show();
                     }
-                }
-                else
-                {
+                } else {
                     time.setText(format("%02d:%02d", hours, minutes));
                 }
-            },currentHour,currentHour,false);
+            }, currentHour, currentHour, false);
             timePicker.show();
         });
     }
-    private void setSpinner()
-    {
+
+    private void setSpinner() {
         ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.tripType_array
                 , android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(androidx.appcompat.R.layout.support_simple_spinner_dropdown_item);
@@ -157,49 +163,38 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     }
 
     public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
-       if(position == 0)
-        {
+        if (position == 0) {
             roundFlag = false;
             tripDateRound.setVisibility((View.INVISIBLE));
             tripTimeRound.setVisibility((View.INVISIBLE));
             btn_addTrip.setVisibility(View.VISIBLE);
             btn_addTripRound.setVisibility(View.INVISIBLE);
-        }
-       else if(position == 1)
-        {
+        } else if (position == 1) {
 
-            if(tripTime.getText().toString().isEmpty() ||tripDate.getText().toString().isEmpty())
-            {
+            if (tripTime.getText().toString().isEmpty() || tripDate.getText().toString().isEmpty()) {
 
                 mSpinner.setSelection(0);
-                Toast.makeText(AddTripPage.this, "Choose takeoff date & time first",Toast.LENGTH_LONG).show();
+                Toast.makeText(AddTripPage.this, "Choose takeoff date & time first", Toast.LENGTH_LONG).show();
+            } else {
+                roundFlag = true;
+                tripDateRound.setVisibility((View.VISIBLE));
+                tripTimeRound.setVisibility((View.VISIBLE));
+                btn_addTrip.setVisibility(View.INVISIBLE);
+                btn_addTripRound.setVisibility(View.VISIBLE);
+                setCalendarPicker(tripDateRound, roundFlag);
+                setTimePicker(tripTimeRound, roundFlag);
             }
-            else
-            {
-            roundFlag = true;
-            tripDateRound.setVisibility((View.VISIBLE));
-            tripTimeRound.setVisibility((View.VISIBLE));
-            btn_addTrip.setVisibility(View.INVISIBLE);
-            btn_addTripRound.setVisibility(View.VISIBLE);
-            setCalendarPicker(tripDateRound, roundFlag);
-            setTimePicker(tripTimeRound, roundFlag);
-            }
+        } else {
+            onNothingSelected(adapterView);
         }
-       else
-       {
-           onNothingSelected(adapterView);
-       }
     }
-     private void addTrip()
-    {
+
+    private void addTrip() {
         btn_addTrip.setOnClickListener(view -> {
             getFields();
-            if(checkFields())
-            {
-                Toast.makeText(AddTripPage.this, "Empty",Toast.LENGTH_LONG).show();
-            }
-            else
-            {
+            if (checkFields()) {
+                Toast.makeText(AddTripPage.this, "Empty", Toast.LENGTH_LONG).show();
+            } else {
                 FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
                 getCoordinates();
                 exitActivity();
@@ -208,30 +203,28 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
 
         });
     }
-    private void addRoundTrip()
-    {
-      btn_addTripRound.setOnClickListener(view -> {
-          getFields();
-          if(checkFields())
-          {
-              Toast.makeText(AddTripPage.this, "Empty",Toast.LENGTH_LONG).show();
-          }
-          else
-          {
-              FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
-              getCoordinates();
-              exitActivity();
-          }
-      });
+
+    private void addRoundTrip() {
+        btn_addTripRound.setOnClickListener(view -> {
+            getFields();
+            if (checkFields()) {
+                Toast.makeText(AddTripPage.this, "Empty", Toast.LENGTH_LONG).show();
+            } else {
+                FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
+                getCoordinates();
+                exitActivity();
+            }
+        });
     }
-    public void getCoordinates(){
+
+    public void getCoordinates() {
         Geocoder geocoder = new Geocoder(this);
         List<Address> addressList = new ArrayList<>();
         try {
             addressList.add((Address) geocoder.getFromLocationName(tripStartLoc.getText().toString(), 1));
             addressList.add((Address) geocoder.getFromLocationName(tripEndLoc.getText().toString(), 1));
 
-            if (addressList != null){
+            if (addressList != null) {
                 doubleStartLat = addressList.get(0).getLatitude();
                 doubleStartLong = addressList.get(0).getLongitude();
                 doubleEndLat = addressList.get(1).getLatitude();
@@ -241,8 +234,8 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
             e.printStackTrace();
         }
     }
-    private void getFields()
-    {
+
+    private void getFields() {
         mTripData.setTripName(tripName.getText().toString().trim());
         mTripData.setTripStartLoc(tripStartLoc.getText().toString().trim());
         mTripData.setTripEndLoc(tripEndLoc.getText().toString().trim());
@@ -250,21 +243,18 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         mTripData.setTripStartTime(tripTime.getText().toString().trim());
         mTripData.setTripType(mSpinner.getSelectedItemPosition());
         mTripData.setTripStatus("Upcoming");
-        if (mTripData.getTripType()==1)
-        {
+        if (mTripData.getTripType() == 1) {
             mTripData.setTripRoundStartTime(tripDateRound.getText().toString().trim());
             mTripData.setTripRoundDate(tripTimeRound.getText().toString().trim());
         }
     }
 
-    private Boolean checkFields()
-    {
+    private Boolean checkFields() {
         getFields();
         return mTripData.check();
     }
 
-    private void exitActivity()
-    {
+    private void exitActivity() {
         mIntent = new Intent(AddTripPage.this, MainActivity.class);
         startActivity(mIntent);
     }

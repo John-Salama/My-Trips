@@ -1,7 +1,5 @@
 package com.example.mytrips;
 
-import static android.content.ContentValues.TAG;
-
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,18 +10,14 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.util.Log;
 import android.util.Patterns;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -45,7 +39,7 @@ public class RegisterPage extends AppCompatActivity {
     private String mPasswordConfirm;
     private TextView mSelectImage;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
-    private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
+    private final StorageReference mStorageReference = FirebaseStorage.getInstance().getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,36 +75,34 @@ public class RegisterPage extends AppCompatActivity {
     private void register() {
         mSignUpBtn.setOnClickListener(v -> {
             getRegistrationData();
-            if(mUser.isEmpty()|| mEmail.isEmpty()|| mPassword.isEmpty()|| mPasswordConfirm.isEmpty())
-                Toast.makeText(RegisterPage.this,"please fill all fields",Toast.LENGTH_LONG).show();
-            else if(!Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()){
+            if (mUser.isEmpty() || mEmail.isEmpty() || mPassword.isEmpty() || mPasswordConfirm.isEmpty())
+                Toast.makeText(RegisterPage.this, "please fill all fields", Toast.LENGTH_LONG).show();
+            else if (!Patterns.EMAIL_ADDRESS.matcher(mEmail).matches()) {
                 mEmailView.setError("email is not valid");
                 mEmailView.requestFocus();
-            }
-            else if(!mPassword.equals(mPasswordConfirm)){
+            } else if (!mPassword.equals(mPasswordConfirm)) {
                 mPasswordConfirmationView.setError("password not matched");
                 mPasswordConfirmationView.requestFocus();
-            }else if(mPassword.length()<8){
+            } else if (mPassword.length() < 8) {
                 mPasswordView.setError("password is short");
                 mPasswordView.requestFocus();
-            }
-            else{
-                if(mSelectedImageUri == null)
+            } else {
+                if (mSelectedImageUri == null)
                     Toast.makeText(RegisterPage.this, "please choose a photo", Toast.LENGTH_SHORT).show();
-                else{
-                mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
-                        .addOnCompleteListener(this, task -> {
-                            if (task.isSuccessful()) {
-                                uploadImage(task.getResult().getUser().getUid());
-                                setUserName(task.getResult().getUser().getUid());
-                                Toast.makeText(RegisterPage.this, "user registered successfully", Toast.LENGTH_LONG).show();
-                                finish();
-                            } else {
-                                Toast.makeText(RegisterPage.this, "email is already registered",
-                                        Toast.LENGTH_SHORT).show();
-                            }
-                        });
-            }
+                else {
+                    mAuth.createUserWithEmailAndPassword(mEmail, mPassword)
+                            .addOnCompleteListener(this, task -> {
+                                if (task.isSuccessful()) {
+                                    uploadImage(task.getResult().getUser().getUid());
+                                    setUserName(task.getResult().getUser().getUid());
+                                    Toast.makeText(RegisterPage.this, "user registered successfully", Toast.LENGTH_LONG).show();
+                                    finish();
+                                } else {
+                                    Toast.makeText(RegisterPage.this, "email is already registered",
+                                            Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                }
             }
         });
     }
@@ -123,11 +115,11 @@ public class RegisterPage extends AppCompatActivity {
     //prepare intent to open gallery
     private void imageChooser() {
         mSelectImage.setOnClickListener(v -> {
-        Intent i = new Intent();
-        i.setType("image/*");
-        i.setAction(Intent.ACTION_GET_CONTENT);
-        launchSomeActivity.launch(i);
-    });
+            Intent i = new Intent();
+            i.setType("image/*");
+            i.setAction(Intent.ACTION_GET_CONTENT);
+            launchSomeActivity.launch(i);
+        });
     }
 
     private Uri mSelectedImageUri;
@@ -148,13 +140,12 @@ public class RegisterPage extends AppCompatActivity {
                                     = MediaStore.Images.Media.getBitmap(
                                     this.getContentResolver(),
                                     mSelectedImageUri);
-                        }
-                        catch (IOException e) {
+                        } catch (IOException e) {
                             e.printStackTrace();
                         }
                         Bitmap resized = Bitmap.createScaledBitmap(selectedImageBitmap,
-                                (int) (mSignupMassage.getWidth()*0.8),
-                                (int) (mSignupMassage.getHeight()*0.8), true);
+                                (int) (mSignupMassage.getWidth() * 0.8),
+                                (int) (mSignupMassage.getHeight() * 0.8), true);
                         mSignupMassage.setImageBitmap(resized);
                     }
                 }
