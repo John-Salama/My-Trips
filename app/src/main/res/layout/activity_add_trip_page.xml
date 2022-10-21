@@ -202,12 +202,27 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tirpType_txt" />
 
+            <Button
+                android:id="@+id/addTrip_btn"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/rounded_btn"
+                android:text="@string/addTrip_btn"
+                android:textColor="@color/white"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/spinner_tritpType"
+                tools:ignore="DuplicateSpeakableTextCheck" />
+
             <EditText
                 android:id="@+id/tripDateRound_editTxt"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="10"
                 android:autofillHints=""
@@ -225,18 +240,18 @@
                 android:padding="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_tritpType" />
+                app:layout_constraintTop_toBottomOf="@+id/addTrip_btn" />
 
             <EditText
                 android:id="@+id/tripTimeRound_editTxt"
                 android:layout_width="match_parent"
                 android:layout_height="56dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="10"
                 android:autofillHints=""
@@ -254,49 +269,29 @@
                 android:padding="16dp"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tripDateRound_editTxt" />
 
             <Button
-                android:id="@+id/addTrip_btn"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/rounded_btn"
-                android:onClick="getCoordinates"
-                android:text="@string/addTrip_btn"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="@+id/addTripRound_btn"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spinner_tritpType"
-                app:layout_constraintVertical_bias="0.0"
-                tools:ignore="DuplicateSpeakableTextCheck" />
-
-            <Button
                 android:id="@+id/addTripRound_btn"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="65dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="16dp"
                 android:background="@drawable/rounded_btn"
-                android:onClick="getCoordinates"
                 android:text="@string/addTrip_btn"
                 android:textColor="@color/white"
-                android:visibility="invisible"
+                android:visibility="visible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tripTimeRound_editTxt" />
+                app:layout_constraintTop_toBottomOf="@+id/tripTimeRound_editTxt" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

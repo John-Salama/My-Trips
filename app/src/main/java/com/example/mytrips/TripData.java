@@ -7,15 +7,20 @@ public class TripData {
     private  String destination;
     private  String date;
     private  String time;
-    private  String status;
+    private  int status;
+    private String roundDate;
+    private String roundTime;
 
-    public TripData(String name, String source, String destination, String date, String time, String status) {
+
+    public TripData() {}
+
+    public TripData(String name, String source, String destination, String date, String time) {
         this.name = name;
         this.source = source;
         this.destination = destination;
         this.date = date;
         this.time = time;
-        this.status = status;
+
     }
 
     public String getName() {
@@ -58,12 +63,52 @@ public class TripData {
         this.time = time;
     }
 
-    public String getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getRoundDate() {
+        return roundDate;
+    }
+
+    public void setRoundDate(String roundDate) {
+        this.roundDate = roundDate;
+    }
+
+    public String getRoundTime() {
+        return roundTime;
+    }
+
+    public void setRoundTime(String roundTime) {
+        this.roundTime = roundTime;
+    }
+
+    public Boolean check()
+    {
+        boolean flag =false;
+        if(getName().isEmpty() || getSource().isEmpty() || getDestination().isEmpty() ||
+            getDate().isEmpty() || getTime().isEmpty())
+        {
+            if (getStatus() == 1)
+            {
+                if (getRoundDate().isEmpty() || getRoundTime().isEmpty())
+                {
+                    flag = false;
+                }
+                else
+                {
+                    flag = true;
+                }
+            }
+            else {
+                flag = true;
+            }
+        }
+        return flag;
     }
 }
 
