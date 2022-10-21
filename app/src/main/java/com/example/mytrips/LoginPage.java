@@ -39,11 +39,6 @@ public class LoginPage extends AppCompatActivity {
         initializeViewComponent();
         goToRegistration();
         goToForgot();
-        /*mLoginBtn.setOnClickListener(view -> {
-            //addTrip = new Intent(LoginPage.this,AddNotePage.class);
-            addTrip = new Intent(LoginPage.this, AddTripPage.class);
-            startActivity(addTrip);
-        });*/
          login();
     }
 

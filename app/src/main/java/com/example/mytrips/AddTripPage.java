@@ -56,10 +56,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     double doubleEndLat;
     double doubleEndLong;
 
-    int tripCounter =0;
-    int RoundTripCounter=0;
     UpcomingTripsData mTripData = new UpcomingTripsData();
-
     Intent mIntent;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -197,17 +194,12 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     {
         btn_addTrip.setOnClickListener(view -> {
             getFields();
-            String tripStringCounter = "Trip";
-
-
             if(checkFields())
             {
                 Toast.makeText(AddTripPage.this, "Empty",Toast.LENGTH_LONG).show();
             }
             else
             {
-                tripCounter++;
-                tripStringCounter += tripCounter;
                 FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
                 getCoordinates();
                 exitActivity();
@@ -220,15 +212,12 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     {
       btn_addTripRound.setOnClickListener(view -> {
           getFields();
-          String RoundTripStringCounter = "Round Trip";
           if(checkFields())
           {
               Toast.makeText(AddTripPage.this, "Empty",Toast.LENGTH_LONG).show();
           }
           else
           {
-              RoundTripCounter ++;
-              RoundTripStringCounter += RoundTripCounter;
               FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
               getCoordinates();
               exitActivity();
@@ -247,8 +236,6 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
                 doubleStartLong = addressList.get(0).getLongitude();
                 doubleEndLat = addressList.get(1).getLatitude();
                 doubleEndLong = addressList.get(1).getLongitude();
-                // String str = ("Latitude: " + doubleStartLat
-                //       + " | " + "Longitude: " + doubleStartLong);
             }
         } catch (Exception e) {
             e.printStackTrace();

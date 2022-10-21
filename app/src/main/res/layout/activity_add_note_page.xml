@@ -8,7 +8,7 @@
     tools:context=".AddNotePage">
 
     <ImageView
-        android:id="@+id/imageView3"
+        android:id="@+id/addNotesPage_img"
         android:layout_width="0dp"
         android:layout_height="272dp"
         android:contentDescription="@string/add_note_img"
@@ -36,7 +36,7 @@
         android:textColorHint="#546E7A"
         app:layout_constraintEnd_toStartOf="@+id/fab_addNote"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/addNotesPage_img"
         tools:ignore="DuplicateSpeakableTextCheck" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -52,7 +52,7 @@
         android:focusable="true"
         app:borderWidth="2dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView3"
+        app:layout_constraintTop_toBottomOf="@+id/addNotesPage_img"
         app:srcCompat="@drawable/ic_baseline_send_24" />
 
     <androidx.recyclerview.widget.RecyclerView
