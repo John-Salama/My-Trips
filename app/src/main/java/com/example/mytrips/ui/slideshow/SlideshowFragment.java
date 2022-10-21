@@ -19,13 +19,12 @@ import com.example.mytrips.databinding.FragmentSlideshowBinding;
 public class SlideshowFragment extends Fragment {
     public UpcomingTripsAdapter adapter;
     private FragmentSlideshowBinding binding;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.upcoming_RecyclerView_history);
-        adapter = new UpcomingTripsAdapter(TripDataManger.getInstance().getHistory(), getContext());
+        adapter = new UpcomingTripsAdapter(TripDataManger.getInstance().getHistory(),getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

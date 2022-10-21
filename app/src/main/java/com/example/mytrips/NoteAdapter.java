@@ -5,7 +5,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,7 +18,8 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     Context mContext;
     boolean emptyFlag;
 
-    public NoteAdapter(List<NoteData> noteData, AddNotePage newNote) {
+    public NoteAdapter(List<NoteData> noteData, AddNotePage newNote)
+    {
         this.mNoteData = noteData;
         this.mContext = newNote;
     }
@@ -28,7 +28,7 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.new_notes_item_list, parent, false);
+        View view = layoutInflater.inflate(R.layout.new_notes_item_list,parent, false);
         return new ViewHolder(view);
     }
 
@@ -39,14 +39,15 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
 
     @Override
     public int getItemCount() {
-        if (mNoteData == null) {
+        if(mNoteData == null) {
             return 0;
-        } else {
+        }else{
             return mNoteData.size();
         }
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder
+    {
         TextView noteData;
         FloatingActionButton deleteFab;
 
@@ -56,12 +57,13 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.ViewHolder> {
             deleteFab = itemView.findViewById(R.id.deleteNote_fab);
 
             deleteFab.setOnClickListener(v -> {
-                int position = getAdapterPosition();
+                int position  =  getAdapterPosition();
                 mNoteData.remove(position);
                 notifyItemRemoved(position);
                 notifyItemRangeChanged(position, mNoteData.size());
-                if (getItemCount() == 0) {
-                    emptyFlag = true;
+                if(getItemCount() == 0)
+                {
+                    emptyFlag =true;
                 }
             });
         }

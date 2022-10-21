@@ -60,8 +60,7 @@ public class UpcomingTripsData {
         this.tripRoundDate = tripRoundDate;
     }
 
-    public UpcomingTripsData() {
-    }
+    public UpcomingTripsData() {}
 
     public String getTripStartTime() {
         return tripStartTime;
@@ -106,17 +105,24 @@ public class UpcomingTripsData {
         return tripRoundDate;
     }
 
-    public Boolean check() {
-        boolean flag = false;
-        if (getTripName().isEmpty() || getTripStartLoc().isEmpty() || getTripEndLoc().isEmpty() ||
-                getTripDate().isEmpty() || getTripStartTime().isEmpty()) {
-            if (getTripType() == 1) {
-                if (getTripRoundDate().isEmpty() || getTripRoundStartTime().isEmpty()) {
+    public Boolean check()
+    {
+        boolean flag =false;
+        if(getTripName().isEmpty() || getTripStartLoc().isEmpty() || getTripEndLoc().isEmpty() ||
+                getTripDate().isEmpty() || getTripStartTime().isEmpty())
+        {
+            if (getTripType() == 1)
+            {
+                if (getTripRoundDate().isEmpty() || getTripRoundStartTime().isEmpty())
+                {
                     flag = false;
-                } else {
+                }
+                else
+                {
                     flag = true;
                 }
-            } else {
+            }
+            else {
                 flag = true;
             }
         }

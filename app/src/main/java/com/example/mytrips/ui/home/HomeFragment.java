@@ -19,13 +19,12 @@ import com.example.mytrips.databinding.FragmentHomeBinding;
 public class HomeFragment extends Fragment {
     public static UpcomingTripsAdapter adapter;
     private FragmentHomeBinding binding;
-
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentHomeBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.upcoming_RecyclerView);
-        adapter = new UpcomingTripsAdapter(TripDataManger.getInstance().getUpcoming(), getContext());
+        adapter = new UpcomingTripsAdapter(TripDataManger.getInstance().getUpcoming(),getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

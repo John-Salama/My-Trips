@@ -21,14 +21,12 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class AddNotePage extends AppCompatActivity {
 
-    ImageView page_Image;
     EditText newNote_EditText;
     FloatingActionButton addNote_fab;
     TextView note_textView;
@@ -57,7 +55,7 @@ public class AddNotePage extends AppCompatActivity {
         mDatabaseReference = mDatabaseReference.child("Trips").child(mTripName).child("Notes");
         initializeContent();
         initializeRecyclerView();
-        initializePageImage();
+
         gettingNotes();
         setAddNote_fab();
         showRecycleView();
@@ -77,7 +75,6 @@ public class AddNotePage extends AppCompatActivity {
     }
 
     private void initializeContent() {
-        page_Image = findViewById(R.id.addNotesPage_img);
         newNote_EditText = findViewById(R.id.addNewNote_editText);
         addNote_fab = findViewById(R.id.fab_addNote);
         note_textView = findViewById(R.id.newNote_textView);
@@ -89,24 +86,17 @@ public class AddNotePage extends AppCompatActivity {
         notes_arrayList  = new ArrayList<>();
         adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_list_item_1,notes_arrayList);
     }
-    private void initializePageImage() {
-
-        Picasso.get().load(R.drawable.addnote_img)
-                .fit()
-                .centerCrop()
-                .into(page_Image);
-    }
     private void setAddNote_fab()
     {
-        addNote_fab.setOnClickListener(view -> {
-            newNote = newNote_EditText.getText().toString();
-            if(newNote.isEmpty())
-            {
-                Toast.makeText(AddNotePage.this,"Note is empty",Toast.LENGTH_LONG).show();
-            }
-            else
-                mDatabaseReference.child(newNote_EditText.getText().toString().trim()).child("details").setValue(newNote_EditText.getText().toString().trim());
-        });
+            addNote_fab.setOnClickListener(view -> {
+                newNote = newNote_EditText.getText().toString();
+                if(newNote.isEmpty())
+                {
+                    Toast.makeText(AddNotePage.this,"Note is empty",Toast.LENGTH_LONG).show();
+                }
+                else
+                    mDatabaseReference.child(newNote_EditText.getText().toString().trim()).child("details").setValue(newNote_EditText.getText().toString().trim());
+            });
     }
     private void showRecycleView()
     {
@@ -144,4 +134,5 @@ public class AddNotePage extends AppCompatActivity {
     }
 
 }
+
 
