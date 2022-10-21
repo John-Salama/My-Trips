@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.mytrips.DataManager;
 import com.example.mytrips.R;
+import com.example.mytrips.TripDataManger;
 import com.example.mytrips.UpcomingTripsAdapter;
 import com.example.mytrips.databinding.FragmentSlideshowBinding;
 
@@ -23,7 +24,7 @@ public class SlideshowFragment extends Fragment {
         binding = FragmentSlideshowBinding.inflate(inflater, container, false);
         View root = binding.getRoot();
         RecyclerView recyclerView = root.findViewById(R.id.upcoming_RecyclerView_history);
-        adapter = new UpcomingTripsAdapter(DataManager.getInstance().getCancelDays(),getContext());
+        adapter = new UpcomingTripsAdapter(TripDataManger.getInstance().getHistory(),getContext());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 

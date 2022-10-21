@@ -22,17 +22,19 @@
 
             <TextView
                 android:id="@+id/upcoming_Status_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="32dp"
                 android:layout_marginTop="32dp"
+                android:layout_marginEnd="32dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                app:layout_constraintEnd_toStartOf="@+id/popup_img"
                 app:layout_constraintStart_toEndOf="@+id/card_day_img"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/upcoming_Name_tv"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -88,6 +90,7 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toTopOf="@+id/upcoming_Start_btn"
                 app:layout_constraintEnd_toEndOf="@+id/popup_img"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/card_day_img"
                 app:layout_constraintTop_toBottomOf="@+id/card_day_img">
 
@@ -132,13 +135,34 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
-                    android:layout_marginBottom="8dp"
                     android:textAlignment="textStart"
                     android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="@+id/upcoming_StartLocation_tv"
+                    app:layout_constraintHorizontal_bias="0.0"
                     app:layout_constraintStart_toStartOf="@+id/upcoming_StartLocation_tv"
                     app:layout_constraintTop_toBottomOf="@+id/upcoming_StartLocation_tv" />
+
+                <TextView
+                    android:id="@+id/upcoming_round_StartTime_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintEnd_toEndOf="@+id/upcoming_endLocation_tv"
+                    app:layout_constraintStart_toStartOf="@+id/upcoming_endLocation_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/upcoming_endLocation_tv" />
+
+                <TextView
+                    android:id="@+id/upcoming_round_StartDate_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/upcoming_round_StartTime_tv"
+                    app:layout_constraintStart_toStartOf="@+id/upcoming_round_StartTime_tv"
+                    app:layout_constraintTop_toBottomOf="@+id/upcoming_round_StartTime_tv" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

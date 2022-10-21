@@ -25,6 +25,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
 
 import java.text.DateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -57,7 +58,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
 
     int tripCounter =0;
     int RoundTripCounter=0;
-    TripData mTripData = new TripData();
+    UpcomingTripsData mTripData = new UpcomingTripsData();
 
     Intent mIntent;
 
@@ -207,7 +208,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
             {
                 tripCounter++;
                 tripStringCounter += tripCounter;
-                FirebaseDatabase.getInstance().getReference().child(user.getUid()).child(tripStringCounter).setValue(mTripData);
+                FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
                 getCoordinates();
                 exitActivity();
 
@@ -228,7 +229,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
           {
               RoundTripCounter ++;
               RoundTripStringCounter += RoundTripCounter;
-              FirebaseDatabase.getInstance().getReference().child(user.getUid()).child(RoundTripStringCounter).setValue(mTripData);
+              FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
               getCoordinates();
               exitActivity();
           }
@@ -236,9 +237,8 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     }
     public void getCoordinates(){
         Geocoder geocoder = new Geocoder(this);
-        List<Address> addressList = null;
+        List<Address> addressList = new ArrayList<>();
         try {
-            assert addressList != null;
             addressList.add((Address) geocoder.getFromLocationName(tripStartLoc.getText().toString(), 1));
             addressList.add((Address) geocoder.getFromLocationName(tripEndLoc.getText().toString(), 1));
 
@@ -256,16 +256,17 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     }
     private void getFields()
     {
-        mTripData.setName(tripName.getText().toString().trim());
-        mTripData.setSource(tripStartLoc.getText().toString().trim());
-        mTripData.setDestination(tripEndLoc.getText().toString().trim());
-        mTripData.setDate(tripDate.getText().toString().trim());
-        mTripData.setTime(tripTime.getText().toString().trim());
-        mTripData.setStatus(mSpinner.getSelectedItemPosition());
-        if (mTripData.getStatus() == 1)
+        mTripData.setTripName(tripName.getText().toString().trim());
+        mTripData.setTripStartLoc(tripStartLoc.getText().toString().trim());
+        mTripData.setTripEndLoc(tripEndLoc.getText().toString().trim());
+        mTripData.setTripDate(tripDate.getText().toString().trim());
+        mTripData.setTripStartTime(tripTime.getText().toString().trim());
+        mTripData.setTripType(mSpinner.getSelectedItemPosition());
+        mTripData.setTripStatus("Upcoming");
+        if (mTripData.getTripType()==1)
         {
-            mTripData.setRoundDate(tripDateRound.getText().toString().trim());
-            mTripData.setRoundTime(tripTimeRound.getText().toString().trim());
+            mTripData.setTripRoundStartTime(tripDateRound.getText().toString().trim());
+            mTripData.setTripRoundDate(tripTimeRound.getText().toString().trim());
         }
     }
 

@@ -20,13 +20,17 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import com.example.mytrips.databinding.ActivityMainBinding;
+import com.example.mytrips.ui.home.HomeFragment;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
@@ -46,6 +50,7 @@ public class MainActivity<mDatabase> extends AppCompatActivity
     private TextView mUserEmail;
     private ImageView mUserImage;
     private Intent mIntent;
+    private final DatabaseReference mDatabaseReference = FirebaseDatabase.getInstance().getReference(mAuth.getCurrentUser().getUid()).child("Trips");
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,6 +87,37 @@ public class MainActivity<mDatabase> extends AppCompatActivity
                 mUserName.setText((CharSequence) task.getResult().getValue());
                 mUserEmail.setText(mUser.getEmail());
                 mUserImage.setImageBitmap(downloadImage(mUser.getUid()));
+            }
+        });
+
+        mDatabaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot != null)
+                {
+                    TripDataManger.getInstance().getUpcoming().clear();
+                    TripDataManger.getInstance().getHistory().clear();
+                }
+                for(DataSnapshot dataSnapshot : snapshot.getChildren())
+                {
+                    UpcomingTripsData trip = new UpcomingTripsData(
+                             dataSnapshot.child("tripStartTime").getValue(String.class)
+                            ,dataSnapshot.child("tripDate").getValue(String.class)
+                            ,dataSnapshot.child("tripName").getValue(String.class)
+                            ,dataSnapshot.child("tripStatus").getValue(String.class)
+                            ,dataSnapshot.child("tripStartLoc").getValue(String.class)
+                            ,dataSnapshot.child("tripEndLoc").getValue(String.class)
+                            ,dataSnapshot.child("tripType").getValue(Integer.class)
+                            ,dataSnapshot.child("tripRoundDate").getValue(String.class)
+                            ,dataSnapshot.child("tripRoundStartTime").getValue(String.class));
+                    TripDataManger.getInstance().addTrip(trip);
+                }
+                HomeFragment.adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

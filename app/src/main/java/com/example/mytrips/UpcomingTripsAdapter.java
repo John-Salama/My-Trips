@@ -18,10 +18,6 @@ import androidx.transition.AutoTransition;
 import androidx.transition.Transition;
 import androidx.transition.TransitionManager;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.List;
 
 public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdapter.ViewHolder>{
@@ -47,12 +43,21 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.startTime_tv.setText(mTripsData.get(position).getTripStartTime());
-        holder.startDate_tv.setText(mTripsData.get(position).getTripDateTime());
-        holder.status_tv.setText(mTripsData.get(position).getTripStatus());
-        holder.name_tv.setText(mTripsData.get(position).getTripName());
-        holder.startLoc_tv.setText(mTripsData.get(position).getTripStartLoc());
         holder.upcoming_Status_tv.setText(mTripsData.get(position).getTripStatus());
+        holder.name_tv.setText(mTripsData.get(position).getTripName());
+        holder.startTime_tv.setText("start time: ".concat(mTripsData.get(position).getTripStartTime()));
+        holder.startDate_tv.setText("start date: ".concat(mTripsData.get(position).getTripDate()));
+        holder.startLoc_tv.setText("start location: ".concat(mTripsData.get(position).getTripStartLoc()));
+        holder.EndLoc_tv.setText("distnation: ".concat(mTripsData.get(position).getTripEndLoc()));
+        if(mTripsData.get(position).getTripType()==1){
+            holder.startTimeRound_tv.setText("back start time: ".concat(mTripsData.get(position).getTripRoundStartTime()));
+            holder.startDateRound_tv.setText("back start date: ".concat(mTripsData.get(position).getTripRoundDate()));
+        }else
+        {
+            holder.startTimeRound_tv.setVisibility(View.INVISIBLE);
+            holder.startDateRound_tv.setVisibility(View.INVISIBLE);
+        }
+
         if(!mTripsData.get(position).getTripStatus().equals("Upcoming"))
             holder.upcomingStartBtn.setVisibility(View.INVISIBLE);
         holder.menuIcon.setOnClickListener(view ->{
@@ -63,6 +68,7 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
                 int id = item.getItemId();
                 if (id == R.id.trip_menu_note) {
                     mIntent = new Intent(mContext,AddNotePage.class);
+                    mIntent.putExtra("trip_name", mTripsData.get(position).getTripName());
                     mContext.startActivity(mIntent);
                 } else if (id == R.id.trip_menu_cancel) {
                     Toast.makeText(mContext, "Trip Cancelled Successfully", Toast.LENGTH_SHORT).show();
@@ -85,8 +91,10 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         TextView startDate_tv;
         TextView name_tv;
         TextView upcoming_Status_tv;
-        TextView status_tv;
         TextView startLoc_tv;
+        TextView EndLoc_tv;
+        TextView startTimeRound_tv;
+        TextView startDateRound_tv;
         ImageView menuIcon;
         CardView trip;
         Button upcomingStartBtn;
@@ -95,12 +103,14 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+            name_tv = itemView.findViewById(R.id.upcoming_Name_tv);
+            upcoming_Status_tv = itemView.findViewById(R.id.upcoming_Status_tv);
             startTime_tv = itemView.findViewById(R.id.upcoming_StartTime_tv);
             startDate_tv = itemView.findViewById(R.id.upcoming_StartDate_tv);
-            upcoming_Status_tv = itemView.findViewById(R.id.upcoming_Status_tv);
-            name_tv = itemView.findViewById(R.id.upcoming_Name_tv);
-            status_tv = itemView.findViewById(R.id.upcoming_StartLocation_tv);
-            startLoc_tv = itemView.findViewById(R.id.upcoming_endLocation_tv);
+            startLoc_tv = itemView.findViewById(R.id.upcoming_StartLocation_tv);
+            EndLoc_tv = itemView.findViewById(R.id.upcoming_endLocation_tv);
+            startTimeRound_tv = itemView.findViewById(R.id.upcoming_round_StartTime_tv);
+            startDateRound_tv = itemView.findViewById(R.id.upcoming_round_StartDate_tv);
             menuIcon = itemView.findViewById(R.id.popup_img);
             data = itemView.findViewById(R.id.constrain_data);
             trip = itemView.findViewById(R.id.trip_card);
