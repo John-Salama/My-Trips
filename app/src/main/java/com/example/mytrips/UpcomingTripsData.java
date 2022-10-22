@@ -12,16 +12,13 @@ public class UpcomingTripsData {
     String tripRoundStartTime;
     String tripRoundDate;
 
-    public UpcomingTripsData(String tripStartTime, String tripDate, String tripName, String tripStatus, String tripStartLoc, String tripEndLoc, int tripType, String tripRoundStartTime, String tripRoundDate) {
+    public UpcomingTripsData(String tripStartTime, String tripDate, String tripName, String tripStatus, String tripStartLoc, String tripEndLoc) {
         this.tripStartTime = tripStartTime;
         this.tripDate = tripDate;
         this.tripName = tripName;
         this.tripStatus = tripStatus;
         this.tripStartLoc = tripStartLoc;
         this.tripEndLoc = tripEndLoc;
-        this.tripType = tripType;
-        this.tripRoundStartTime = tripRoundStartTime;
-        this.tripRoundDate = tripRoundDate;
     }
 
     public void setTripStartTime(String tripStartTime) {

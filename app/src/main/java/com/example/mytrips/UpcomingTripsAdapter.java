@@ -49,14 +49,6 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         holder.startDate_tv.setText("start date: ".concat(mTripsData.get(position).getTripDate()));
         holder.startLoc_tv.setText("start location: ".concat(mTripsData.get(position).getTripStartLoc()));
         holder.EndLoc_tv.setText("distnation: ".concat(mTripsData.get(position).getTripEndLoc()));
-        if(mTripsData.get(position).getTripType()==1){
-            holder.startTimeRound_tv.setText("back start time: ".concat(mTripsData.get(position).getTripRoundStartTime()));
-            holder.startDateRound_tv.setText("back start date: ".concat(mTripsData.get(position).getTripRoundDate()));
-        }else
-        {
-            holder.startTimeRound_tv.setVisibility(View.INVISIBLE);
-            holder.startDateRound_tv.setVisibility(View.INVISIBLE);
-        }
 
         if(!mTripsData.get(position).getTripStatus().equals("Upcoming"))
             holder.upcomingStartBtn.setVisibility(View.INVISIBLE);
@@ -93,8 +85,6 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
         TextView upcoming_Status_tv;
         TextView startLoc_tv;
         TextView EndLoc_tv;
-        TextView startTimeRound_tv;
-        TextView startDateRound_tv;
         ImageView menuIcon;
         CardView trip;
         Button upcomingStartBtn;
@@ -109,8 +99,6 @@ public class UpcomingTripsAdapter extends RecyclerView.Adapter<UpcomingTripsAdap
             startDate_tv = itemView.findViewById(R.id.upcoming_StartDate_tv);
             startLoc_tv = itemView.findViewById(R.id.upcoming_StartLocation_tv);
             EndLoc_tv = itemView.findViewById(R.id.upcoming_endLocation_tv);
-            startTimeRound_tv = itemView.findViewById(R.id.upcoming_round_StartTime_tv);
-            startDateRound_tv = itemView.findViewById(R.id.upcoming_round_StartDate_tv);
             menuIcon = itemView.findViewById(R.id.popup_img);
             data = itemView.findViewById(R.id.constrain_data);
             trip = itemView.findViewById(R.id.trip_card);

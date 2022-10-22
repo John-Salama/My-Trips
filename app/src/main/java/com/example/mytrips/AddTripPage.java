@@ -59,6 +59,8 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     double doubleEndLong;
 
     UpcomingTripsData mTripData = new UpcomingTripsData();
+    UpcomingTripsData mRoundTripData = new UpcomingTripsData();
+
     Intent mIntent;
 
     FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
@@ -204,16 +206,21 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
     {
         btn_addTrip.setOnClickListener(view -> {
             getFields();
+            String tripStringCounter = "Trip";
+
+
             if(checkFields())
             {
                 Toast.makeText(AddTripPage.this, "Empty",Toast.LENGTH_LONG).show();
             }
             else
             {
-                FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
+                FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(mTripData.tripName).setValue(mTripData);
+                if(mTripData.getTripType()==1){
+                    FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(mRoundTripData.tripName).setValue(mRoundTripData);
+                }
                 getCoordinates();
                 exitActivity();
-
             }
 
         });
@@ -228,7 +235,10 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
           }
           else
           {
-              FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(tripName.getText().toString().trim()).setValue(mTripData);
+              FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(mTripData.tripName).setValue(mTripData);
+              if(mTripData.getTripType()==1){
+                  FirebaseDatabase.getInstance().getReference().child(user.getUid()).child("Trips").child(mRoundTripData.tripName).setValue(mRoundTripData);
+              }
               getCoordinates();
               exitActivity();
           }
@@ -246,6 +256,8 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
                 doubleStartLong = addressList.get(0).getLongitude();
                 doubleEndLat = addressList.get(1).getLatitude();
                 doubleEndLong = addressList.get(1).getLongitude();
+                // String str = ("Latitude: " + doubleStartLat
+                //       + " | " + "Longitude: " + doubleStartLong);
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -262,8 +274,13 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         mTripData.setTripStatus("Upcoming");
         if (mTripData.getTripType()==1)
         {
-            mTripData.setTripRoundStartTime(tripDateRound.getText().toString().trim());
-            mTripData.setTripRoundDate(tripTimeRound.getText().toString().trim());
+            mRoundTripData.setTripName(tripName.getText().toString().trim()+" Round");
+            mRoundTripData.setTripStartLoc(tripEndLoc.getText().toString().trim());
+            mRoundTripData.setTripEndLoc(tripStartLoc.getText().toString().trim());
+            mRoundTripData.setTripStartTime(tripDateRound.getText().toString().trim());
+            mRoundTripData.setTripDate(tripTimeRound.getText().toString().trim());
+            mRoundTripData.setTripType(mSpinner.getSelectedItemPosition());
+            mRoundTripData.setTripStatus("Upcoming");
         }
     }
 
