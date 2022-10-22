@@ -96,6 +96,7 @@ public class AddNotePage extends AppCompatActivity {
                 }
                 else
                     mDatabaseReference.child(newNote_EditText.getText().toString().trim()).child("details").setValue(newNote_EditText.getText().toString().trim());
+                    newNote_EditText.setText("");
             });
     }
     private void showRecycleView()

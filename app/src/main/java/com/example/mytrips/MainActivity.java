@@ -106,10 +106,8 @@ public class MainActivity<mDatabase> extends AppCompatActivity
                             ,dataSnapshot.child("tripName").getValue(String.class)
                             ,dataSnapshot.child("tripStatus").getValue(String.class)
                             ,dataSnapshot.child("tripStartLoc").getValue(String.class)
-                            ,dataSnapshot.child("tripEndLoc").getValue(String.class)
-                            ,dataSnapshot.child("tripType").getValue(Integer.class)
-                            ,dataSnapshot.child("tripRoundDate").getValue(String.class)
-                            ,dataSnapshot.child("tripRoundStartTime").getValue(String.class));
+                            ,dataSnapshot.child("tripEndLoc").getValue(String.class));
+
                     TripDataManger.getInstance().addTrip(trip);
                 }
                 HomeFragment.adapter.notifyDataSetChanged();

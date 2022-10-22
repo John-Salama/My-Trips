@@ -142,27 +142,6 @@
                     app:layout_constraintStart_toStartOf="@+id/upcoming_StartLocation_tv"
                     app:layout_constraintTop_toBottomOf="@+id/upcoming_StartLocation_tv" />
 
-                <TextView
-                    android:id="@+id/upcoming_round_StartTime_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintEnd_toEndOf="@+id/upcoming_endLocation_tv"
-                    app:layout_constraintStart_toStartOf="@+id/upcoming_endLocation_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/upcoming_endLocation_tv" />
-
-                <TextView
-                    android:id="@+id/upcoming_round_StartDate_tv"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:layout_marginBottom="16dp"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="@+id/upcoming_round_StartTime_tv"
-                    app:layout_constraintStart_toStartOf="@+id/upcoming_round_StartTime_tv"
-                    app:layout_constraintTop_toBottomOf="@+id/upcoming_round_StartTime_tv" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

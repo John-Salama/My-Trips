@@ -10,7 +10,6 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.mytrips.DataManager;
 import com.example.mytrips.R;
 import com.example.mytrips.TripDataManger;
 import com.example.mytrips.UpcomingTripsAdapter;
