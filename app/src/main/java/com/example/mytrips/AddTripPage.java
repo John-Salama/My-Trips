@@ -17,12 +17,14 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.text.DateFormat;
 import java.util.ArrayList;
@@ -32,7 +34,7 @@ import java.util.List;
 
 
 public class AddTripPage extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
-
+    ImageView page_Image;
     EditText tripName;
     EditText tripStartLoc;
     EditText tripEndLoc;
@@ -73,6 +75,7 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         addRoundTrip();
     }
     private void initializeContent() {
+        page_Image = findViewById(R.id.add_Trip_img);
         tripName = findViewById(R.id.tripName_editTxt);
         tripStartLoc =  findViewById(R.id.tripStart_editTxt);
         tripEndLoc = findViewById(R.id.tripEnd_editTxt);
@@ -84,6 +87,13 @@ public class AddTripPage extends AppCompatActivity implements AdapterView.OnItem
         btn_addTrip = findViewById(R.id.addTrip_btn);
         btn_addTripRound = findViewById(R.id.addTripRound_btn);
 
+    }
+    private void initializePageImage() {
+
+        Picasso.get().load(R.drawable.plane2)
+                .fit()
+                .centerCrop()
+                .into(page_Image);
     }
 
     private void setCalendarPicker(final EditText date1 , Boolean round) {

@@ -33,6 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
+import com.squareup.picasso.Picasso;
 
 public class MainActivity<mDatabase> extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -46,6 +47,7 @@ public class MainActivity<mDatabase> extends AppCompatActivity
     private final StorageReference mStorageReference =  FirebaseStorage.getInstance().getReference();
     private FirebaseUser mUser;
     private String mUserId;
+    ImageView page_Image;
     private TextView mUserName;
     private TextView mUserEmail;
     private ImageView mUserImage;
@@ -60,6 +62,7 @@ public class MainActivity<mDatabase> extends AppCompatActivity
         setContentView(binding.getRoot());
 
         setSupportActionBar(binding.appBarMain.toolbar);
+        initializePageImage();
         binding.appBarMain.fab.setOnClickListener(view -> {
                     mIntent = new Intent(MainActivity.this, AddTripPage.class);
                     startActivity(mIntent);
@@ -153,5 +156,12 @@ public class MainActivity<mDatabase> extends AppCompatActivity
                 (int) (mUserImage.getWidth()*0.8),
                 (int) (mUserImage.getHeight()*0.8),
                 true);
+    }
+    private void initializePageImage() {
+        page_Image = findViewById(R.id.upcmoingImg);
+        Picasso.get().load(R.drawable.upcoming)
+                .fit()
+                .centerCrop()
+                .into(page_Image);
     }
 }
